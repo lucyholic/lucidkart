@@ -1,0 +1,55 @@
+main {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    min-height: 100vh;
+    margin-top: 70px;
+    height: 100%;
+}
+
+main img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    /* min-width: 100px; */
+    float: left;
+    clear: both;
+    border-left: black;
+    /* padding-left: 15px; */
+    /* padding-right: 15px; */
+    border-left: solid black;
+    border-right: solid 1px #00000059;
+    margin: 20px;
+}
+
+#numQty {
+    width: 100%;
+    max-width: 140px;
+    height: 40px;
+}
+
+h2 {
+    /* margin: 0 auto; */
+    /* float: left; */
+    /* width: 100%; */
+    /* height: auto; */
+    /* text-align: left; */
+    clear: ri;
+}
+
+#add {
+    background-color: #000000;
+    color: white;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 200px;
+    height: 40px; 
+}
+
+#itemForm {
+    float: left;
+    clear: right;
+    width: 45%;
+    height: auto;
+    margin: 20px;
+}

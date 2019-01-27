@@ -1,0 +1,103 @@
+html {
+	background: linear-gradient(132deg, #2efffe4d, #ff9eb047, white);
+	background-size: 400% 10%;
+	animation: BackgroundGradient 30s ease infinite;
+}
+
+@keyframes BackgroundGradient {
+	0% {background-position: 0% 50%;}
+	50% {background-position: 100% 50%;}
+	100% {background-position: 0% 50%;}
+}
+
+body {
+	margin: 15vh auto;
+	width: 800px;
+	height: 350px;
+	font-size:0.825em;
+	color:#121819;
+	/*font-family: "Myriad Pro","Helvetica Neue",Helvetica,Arial,Sans-Serif;*/
+	font-family: "Graphik Webfont",-apple-system,BlinkMacSystemFont,"Roboto",
+				"Droid Sans","Segoe UI","Helvetica",Arial,sans-serif;
+}
+
+form {
+	/*background-color: rgba(186, 212, 255, .5);*/
+	background-color: rgba(255, 255, 255, 0.85);
+	padding: 4.5em;
+	/* FLOAT: right; */
+	color: #45494f;
+	z-index: -1;
+	width: 800px;
+	column-count: 2;
+	letter-spacing: 1px;
+	/* border: solid black 1px; */
+	box-shadow: 36px 10px #b0b0b029;
+	shape-outside: border-box;
+	/* height: 329px; */
+}
+
+input {
+	width: 280px;
+	height: 40px;
+	/* margin: auto; */
+	/* margin: 19px 0; */
+	position: relative;
+}
+
+::placeholder {
+	padding: 2em;
+	letter-spacing: 1px;
+}
+/*
+hr {
+	border: 0;
+	height: 2px;
+	margin: 1em; 
+    background-image: linear-gradient(to right, rgba(255, 255, 255, .5), rgba(255, 255, 255, 1), rgba(255, 255, 255, .5));}
+}*/
+
+#txtProvince {
+    height: 46px;
+}
+
+.button {
+	background: linear-gradient(132deg, #bae0e363, #f17b914a), white;
+	background-size: 400% 10%;
+	background: #000000;
+	animation: BackgroundGradient 30s ease infinite;
+	color: white;
+	/* border: solid black 1px; */
+	width: 165px;
+	border: none;
+	/* height: 66px; */
+	bottom: 0px;
+	/* right: -79px; */
+	position: relative;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+#txtFirstName, #txtLastName, #txtCity, #txtPostalCode {
+    width: 187px;
+}
+
+h1 {
+	font-size: 6em;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+	color: black;
+	margin: 0 auto;
+	/* float: left; */
+	/* width: 70px; */
+	/* text-align: left; */
+	z-index: 1;
+	position: relative;
+}
+
+#logo {
+	font-weight: lighter;
+	/* width: 90px; */
+	/* float: left; */
+	position: relative;
+}

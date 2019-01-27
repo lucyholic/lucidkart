@@ -1,0 +1,28 @@
+footer
+{
+   height: 200px;
+    width: 100%;
+    clear: both;
+    /* margin-top: 140px; */
+    color: white;
+    position: relative;
+    /* padding: 30px; */
+    background-color: #000000;
+    /* bottom: -637px; */
+    bottom: -100%;
+}
+
+/** edits for index   
+	background-color: #ecf8f7;
+    height: 200px;
+    width: 120%;
+    clear: both;
+    margin: -50px;
+    z-index: 999;
+    border-top: solid #b0b0b0 1px;
+    margin-top: 140px;
+*/
+footer p 
+{
+	padding: 2em;
+}

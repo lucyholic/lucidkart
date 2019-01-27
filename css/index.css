@@ -1,0 +1,146 @@
+*{
+	/* Universal reset: */
+	margin:0;
+	padding:0;
+}
+
+.itemCol {
+    margin-top: -4px; 
+    /* display: inline-block; */
+    /* bottom: 200px; */
+    border-top: solid black;
+    text-align: center;
+    /* padding: 50px; */
+    /* overflow: auto; */
+    /* position: relative; */
+    /* overflow: hidden; */
+    /* bottom: -712px; */
+    /* background: white; */
+    /* z-index: 1; */
+    /* display: inline-block; */
+    /* display: block; */
+    /* height: calc(100% - 100px); */
+    /* width: -webkit-fill-available; */
+    /* width: fit-content; */
+    background-color: #fff;
+    /* position: absolute; */
+    /* position: sticky; */
+    /* flex-grow: 1; */
+    /* height: calc(100% - 100px); */
+}
+
+html {
+    background-attachment: fixed;
+    background-color: white;
+    height: 100%;
+}
+
+body{
+    font-size:0.825em;
+    margin: 0;
+    color:#121819;
+    font-family: "Graphik Webfont",-apple-system,BlinkMacSystemFont,"Roboto",
+				"Droid Sans","Segoe UI","Helvetica",Arial,sans-serif;
+}
+
+main{
+    /* width: 80%; */
+    /* margin: 0 auto; */
+    /* padding-top: 60px; */
+    height: 100%;
+    min-height: 500px;
+}
+
+/****************** Item styles *******************/
+.itemName{
+    font-size: 1.3em;
+    font-variant: small-caps;
+    color: black;
+    text-decoration: none;
+}
+
+.itemPrice{
+    font-size: .9em;
+    font-weight: lighter;
+}
+
+.item {
+ /*  float: left;
+    margin: 20px;
+    position: relative;
+    border: solid #00000030 1px;
+    background-color: #e8e8e0;*/
+ /* float: left; */
+ margin: 20px;
+ /* width: 20px; */
+ display: inline-block;
+ /* padding-top: 57px; */
+ /* text-align: center; */
+ /* -webkit-box-sizing: border-box; */
+ -moz-box-sizing: border-box;
+ /* box-sizing: border-box; */
+ position: relative;
+ overflow: auto;
+}
+
+.description {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #00000075;
+}
+
+.item:hover .overlay {
+    opacity: 1;
+}
+
+p{
+    padding: 0 2px 2px 15px;
+}
+
+/****************** Banner styles *******************/
+.banner img {
+    width: 100%;
+    position: fixed;
+    /* z-index: -11; */
+}
+
+.banner {
+    
+    
+    
+      /* The image used */
+  background-image: url("/images/poly.jpg");
+
+  /* Set a specific height */
+  min-height: 500px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+/****************** Category styles *******************/
+.category{
+	margin: o auto;
+	background-color: black;
+}

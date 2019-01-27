@@ -1,0 +1,86 @@
+<?php
+	require_once('lib/header.php');
+	
+	if (isset($_POST['upload']))
+	{
+		$itemName = $_POST['txtItemName'];
+		$itemCategory = (int)$_POST['lstItemCategory'];
+		$itemPrice = (float)$_POST['txtItemPrice'];
+		$itemPrice = number_format($itemPrice, 2);
+		$description = $_POST['txtDescription'];
+		$description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
+		$latestItem = isset($_POST['chkLatest']);
+		
+		$upload_dir = '../images/';
+		$uploaded_file = $upload_dir . basename($_FILES['imgItemImage']['name']);
+			
+		if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+		{
+			$itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+			
+			$sql = "INSERT INTO item (itemName, 
+			itemCategory,
+			itemPrice,
+			itemImage, 
+			description,
+			latestItem) VALUES('".		
+			$itemName."', '".
+			$itemCategory."', '".
+			$itemPrice."', '".
+			$itemImage."', '".
+			$description."', '".
+			$latestItem."')";
+			
+			$result = mysqli_query($conn, $sql);
+			
+			echo "<script>alert('Item(".$itemName.") has been added.');
+			    window.location='itemmaintenance.php';</script>";
+		}
+		
+		else
+		{
+			$msg = $_FILES['imgItemImage']['error'];
+			echo "<script>alert(".$msg.");</script>
+				window.location='itemmaintenance.php'";
+		}
+	}
+	
+?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>Item Upload Page</title>
+		<meta charset="utf-8">
+		<script src="../js/validate.js"></script>
+		<!-- <link rel="stylesheet" href="style.css"> -->
+	</head>
+	
+	<body>
+	<form name="itemupload" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Item();" enctype="multipart/form-data">
+		Item Name: <input type="text" name="txtItemName" id="txtItemName" onfocusout="Trim('txtItemName');"><br />
+		Item Category: <select name="lstItemCategory" id="lstItemCategory">
+			<option value="" disabled selected>Select Category</option>
+		
+		<?php
+			$selectBox = mysqli_query($conn, "SELECT * FROM category ORDER BY categoryName");
+		
+			while($row = mysqli_fetch_assoc($selectBox))
+			{
+				echo "<option value='".$row['categoryId']."'>".$row['categoryName']."</option>";
+			}
+		?>
+			</select><br />
+		Item Price: <input type="text" name="txtItemPrice" id="txtItemPrice" onfocusout="Trim('txtItemPrice');"><br />
+		Item Thumbnail: <input type="hidden" name="MAX_FILE_SIZE" value="3145728" />
+		<input type="file" accept="image/*" name="imgItemImage" id="imgItemImage" onchange="CheckImage();"/><br />
+		Item Description: <textarea name="txtDescription" id="txtDescription"></textarea><br />
+		Latest Item: <input type="checkbox" name="chkLatest" id="chkLatest" checked /><br />
+		<input type="submit" name="upload" value="Submit">
+		<input type="reset" value="Reset">
+		<input type="button" value="Cancel" onclick="history.back(-1);">
+	
+	</form>
+	</body>
+</html>
