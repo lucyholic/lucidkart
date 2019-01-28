@@ -15,14 +15,13 @@
 	if(isset($_POST['update']))
 	{
 		$numCount= $_POST['count'];
-		echo '<script>console.log("count: '.$numCount.'");</script>';
+
 		for($i = 0; $i < $numCount; $i++)
 		{
 			$tempId = "txtItemId".($i + 1);
 			$tempOnHand = "txtOnHand".($i + 1);
 			$id = $_POST[$tempId];
 			$onHand = $_POST[$tempOnHand];
-			echo '<script>console.log("ID: '.$id.'")</script>';
 			$sql = "UPDATE item SET onHand='".$onHand."' WHERE itemId='".$id."'";
 			mysqli_query($conn, $sql);
 		}
@@ -54,11 +53,13 @@
 <h2>Stock Management</h2>
 <font color=red><strong><?= $message ?></strong></font>
 
-<form name="searchform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+<form name="searchform" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
 	<input type="text" name="search" id="search" placeholder="Search Item..">
 	<input type="submit" value="Search">
 </form>
 
+
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 <table><tr>
 	<th>Item ID</th>
 	<th>Item Name</th>
@@ -84,5 +85,7 @@
 	
 	echo '</table>
 		<input type="hidden" name="count" id="count" value="'.$count.'" />
-		<input type="submit" name="update" value="update" /><form>';
+		<input type="submit" name="update" value="update" /><form><br />';
+
+	require_once('lib/footer.php');
 ?>
