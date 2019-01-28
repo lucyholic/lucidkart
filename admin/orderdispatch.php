@@ -1,5 +1,6 @@
 <?php
-require_once('lib/header.php');
+require_once('lib/header.php');	
+require_once('lib/authentication.php');
 
 if(!isset($_SESSION['orderid']))
 {
@@ -16,22 +17,22 @@ $sql = "SELECT itemId, orderId, itemName, onHand-qty AS newOnHand
     WHERE orderId = '".$id."'";
 $result = mysqli_query($conn, $sql);
 
-while($row = mysqli_fetch_assoc($result))
-{
-    if ($row['newOnHand'] < 0)
-    {
-        echo '<script>alert("Cannot dispatch: Item '.$row['itemName'].' is out of stock.");
-            window.location = "ordermanager.php?orderid='.$id.'";</script>';
-        exit();
-    }
-}
+// while($row = mysqli_fetch_assoc($result))
+// {
+//     if ($row['newOnHand'] < 0)
+//     {
+//         echo '<script>alert("Cannot dispatch: Item '.$row['itemName'].' is out of stock.");
+//             window.location = "ordermanager.php?orderid='.$id.'";</script>';
+//         exit();
+//     }
+// }
 
 
 while($row = mysqli_fetch_assoc($result))
 {
     echo '<script>console.info("New onHand: '.$row['newOnHand'].'");</script>';
     $stockUpdate = "UPDATE item SET
-        onHand = ".$row['newOnHand']."
+        onHand = '".$row['newOnHand']."'
         WHERE itemId = '".$row['itemId']."'";
     
     mysqli_query($conn, $stockUpdate);

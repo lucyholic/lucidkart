@@ -1,5 +1,6 @@
 <?php
 	require_once('lib/header.php');
+	require_once('lib/authentication.php');
 	
 	if(empty($_GET['id']))
 		echo "<script>window.location='categorymaintenance.php'</script>";

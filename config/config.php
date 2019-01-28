@@ -5,4 +5,6 @@
 		"dpw"=>"admin123",
 		"dname"=>"lucidkart"
 	);
+
+	$adminpassword = 'admin123';
 ?>

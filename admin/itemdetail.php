@@ -1,6 +1,6 @@
 <?php
-	require_once('lib/header.php');	
-	
+	require_once('lib/header.php');		
+	require_once('lib/authentication.php');
 	
 	// title setting
     $title = "::LUCIDKART:: - Item Detail";
@@ -8,7 +8,7 @@
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/item.css">';
 	
-	require_once('lib/menu.php');
+	require_once('lib/adminmenu.php');
 	
 	if(empty($_GET['itemid']))
 		header('Location: itemmaintenance.php');		
@@ -36,6 +36,6 @@
 	echo '<p>Latest Item: <input type="checkbox" '.$checked.' readonly /></p>';
 	echo '<a href="itemmaintenance.php">Go back to Item Maintenance Page</a>';
 		
-	require_once('lib/footer.php');
+	require_once('../lib/footer.php');
 
 ?>

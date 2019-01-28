@@ -1,13 +1,14 @@
 <?php
-	require_once('lib/header.php');	
-	
+	require_once('lib/header.php');		
+    require_once('lib/authentication.php');
+    
 	// title setting
     $title = "::LUCIDKART:: - Order management";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
-	require_once('lib/menu.php');
+	require_once('lib/adminmenu.php');
     
     $sql = "SELECT * FROM orderHeader";
 
@@ -59,5 +60,5 @@
 
     echo '</table>';
 
-    require_once('lib/footer.php');
+    require_once('../lib/footer.php');
 ?>
