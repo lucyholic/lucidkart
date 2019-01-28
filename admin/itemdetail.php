@@ -36,6 +36,6 @@
 	echo '<p>Latest Item: <input type="checkbox" '.$checked.' readonly /></p>';
 	echo '<a href="itemmaintenance.php">Go back to Item Maintenance Page</a>';
 		
-	require_once('lib/footer.php');
+	require_once('../lib/footer.php');
 
 ?>

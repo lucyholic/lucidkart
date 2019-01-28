@@ -87,5 +87,5 @@
 		<input type="hidden" name="count" id="count" value="'.$count.'" />
 		<input type="submit" name="update" value="update" /><form><br />';
 
-	require_once('lib/footer.php');
+	require_once('../lib/footer.php');
 ?>

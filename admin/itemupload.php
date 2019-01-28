@@ -82,5 +82,9 @@
 		<input type="button" value="Cancel" onclick="history.back(-1);">
 	
 	</form>
-	</body>
-</html>
+
+<?php
+
+require_once('../lib/footer.php');
+
+?>

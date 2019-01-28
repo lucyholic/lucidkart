@@ -96,7 +96,7 @@ else
 
 echo '<a href="ordermanagement.php">Go back to order management page</a>';
 
-require_once('lib/footer.php');
+require_once('../lib/footer.php');
 
 ?>
 

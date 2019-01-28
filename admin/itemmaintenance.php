@@ -99,6 +99,6 @@
 	
 <?php
 
-	require_once('lib/footer.php');
+	require_once('../lib/footer.php');
 
 ?>
