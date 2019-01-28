@@ -38,7 +38,8 @@
 			<table>
     			<tr>
     				<th>Order Date</th>
-    				<th>Order Item</th>
+					<th>Order Item</th>
+					<th>Quantity</th>
     			</tr>';
 		
 		while($row = mysqli_fetch_assoc($orderResult))
@@ -58,7 +59,8 @@
 			
 			while ($itemRow = mysqli_fetch_assoc($itemResult))
 			{
-				echo '<td>'.$itemRow['itemName'].'</td></tr><tr>';
+				echo '<td>'.$itemRow['itemName'].'</td>
+					<td>'.$itemRow['qty'].'</td></tr><tr>';
 			}
 
 			echo '</tr>';
