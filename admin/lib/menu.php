@@ -11,7 +11,7 @@
 		<?= $css ?>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+		<link rel="shortcut icon" type="../image/x-icon" href="../images/favicon.ico">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script src="../js/validate.js"></script>
 	</head>
