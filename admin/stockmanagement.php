@@ -1,13 +1,14 @@
 <?php
-	require_once('lib/header.php');	
-	
+	require_once('lib/header.php');		
+	require_once('lib/authentication.php');
+
 	// title setting
     $title = "::LUCIDKART:: - Stock management";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
-	require_once('lib/menu.php');
+	require_once('lib/adminmenu.php');
 
 	$message = "";
 	$count = 0;
@@ -51,7 +52,7 @@
 ?>
 
 <h2>Stock Management</h2>
-<font color=red><strong><?= $message ?></strong></font>
+<p><font color=red><strong><?= $message ?></strong></font></p>
 
 <form name="searchform" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
 	<input type="text" name="search" id="search" placeholder="Search Item..">

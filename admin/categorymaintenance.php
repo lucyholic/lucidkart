@@ -1,6 +1,6 @@
 <?php
 	require_once('lib/header.php');	
-	
+	require_once('lib/authentication.php');
 	
 	// title setting
     $title = "::LUCIDKART:: - Item Detail";
@@ -8,7 +8,7 @@
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
-	require_once('lib/menu.php');
+	require_once('lib/adminmenu.php');
 	
     $message = "";
 

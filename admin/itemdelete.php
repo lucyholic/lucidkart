@@ -1,6 +1,7 @@
 <?php
-	require_once('lib/header.php');
-	
+	require_once('lib/header.php');	
+	require_once('lib/authentication.php');
+
 	if(empty($_GET['itemid']))
 		echo "<script>window.location='notfound.php'</script>";
 	
