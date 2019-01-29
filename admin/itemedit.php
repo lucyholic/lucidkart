@@ -11,6 +11,7 @@
 	require_once('lib/adminmenu.php');
 
 	$error = "";
+	
 	// If the form is sutmitted, update database
 	if (isset($_POST['edit']))
 	{
