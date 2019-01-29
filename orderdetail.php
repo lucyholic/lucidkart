@@ -46,15 +46,27 @@
 	
 	else
 	{
-	    $customerSql ="SELECT * FROM orderHeader WHERE orderId=".$orderId;
-	    $customer_info = mysqli_fetch_assoc((mysqli_query($conn, $customerSql)));
+	    $deliverySql ="SELECT * FROM orderHeader WHERE orderId=".$orderId;
+	    $deliveryInfo = mysqli_fetch_assoc((mysqli_query($conn, $deliverySql)));
 		
 		// Deliver to
-		echo '<h3>Deliver To: '.$customer_info['firstName'].' '.$customer_info['lastName'].'</h3>';
-		echo '<p>'.$customer_info['address'].', <br />'
-    		.$customer_info['city'].', '.$customer_info['province'].'<br />'
-    		.$customer_info['postalCode'].'</p>';
-		
+		echo '<h3>Deliver To: '.$deliveryInfo['firstName'].' '.$deliveryInfo['lastName'].'</h3>';
+		echo '<p>'.$deliveryInfo['address'].', <br />'
+    		.$deliveryInfo['city'].', '.$deliveryInfo['province'].'<br />'
+			.$deliveryInfo['postalCode'].'</p>';
+			
+		// Shipped date
+		if ($deliveryInfo['dispatchedDate'] == NULL)
+		{
+			$shipped = "Preparing for shipping...";
+		}
+
+		else
+		{
+			$shipped = "Shipped Date: ".$row['dispatchedDate'];
+		}
+
+		echo "<p><b>$shipped</b></p>";
 		
 		// Order list
 		echo '<h3>Order List</h3>';

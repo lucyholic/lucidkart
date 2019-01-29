@@ -1,15 +1,14 @@
 <?php
 	// This line must be on the top
 	require_once('lib/php_header.php');
-	
+	$message = "";
+
 	// if the page requires log in, keep below codes
 	if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
 	{
 		echo '<script>alert("Log in first");
 			window.location = "index.php"</script>';
 	}
-	
-	$message = "";
 
 	// when edit profile
 	else if (isset($_POST['edit']))

@@ -25,11 +25,14 @@
     if(mysqli_num_rows($result) != 0)
 	{
 		$_SESSION['message'] = "Category cannot be deleted: Items exist";
-		echo "window.location='categorymaintenance.php';</script>";
+		echo "<script>window.location='categorymaintenance.php';</script>";
 	}
 	
-	$sql = "DELETE FROM category WHERE categoryId='".$id."'";
-	$result = mysqli_query($conn, $sql);
+	else
+	{
+		$sql = "DELETE FROM category WHERE categoryId='".$id."'";
+		$result = mysqli_query($conn, $sql);
 
-	echo "<script>window.location='categorymaintenance.php'</script>";
+		echo "<script>window.location='categorymaintenance.php'</script>";
+	}
 ?>
