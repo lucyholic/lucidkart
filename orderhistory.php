@@ -10,9 +10,8 @@
 	}
 	
 	// sql setting
-	$orderSql = "SELECT * FROM orderHeader 
-	    JOIN orderDetail USING (orderId) 
-	    JOIN item ON orderDetail.itemId = item.itemId 
+	$orderSql = "SELECT *
+		FROM orderHeader
 	    WHERE customerId='".$_SESSION['userId']."' 
     	ORDER BY orderDate DESC";
 	$orderResult = mysqli_query($conn, $orderSql);
@@ -35,25 +34,37 @@
 	else
 	{
 		echo '<p>Click Order Date to see Detail</p>
-			<div style="overflow-x:auto;"><table>
+			<div style="overflow-x:auto;">
+			<table>
     			<tr>
     				<th>Order Date</th>
-    				<th>Order Item</th>
-    				<th>Price</th>
-    				<th>Quantity</th>
-    				<th>Total Amount</th>
+					<th>Order Item</th>
+					<th>Quantity</th>
     			</tr>';
 		
 		while($row = mysqli_fetch_assoc($orderResult))
 		{
-			
+			$itemSql = "SELECT * FROM orderDetail
+				JOIN item USING (itemId)
+				WHERE orderId = '".$row['orderId']."'
+				orDER BY itemName";
+			$itemResult = mysqli_query($conn, $itemSql);
+			$numItem = mysqli_num_rows($itemResult);
+
+			if ($numItem == 0)
+				$numItem = 1;
+
 			echo '<tr>
-				<td><a href="orderdetail.php?orderid='.$row['orderId'].'">'.$row['orderDate'].'</a></td>
-				<td>'.$row['itemName'].'</td>
-				<td>'.$row['itemPrice'].'</td>
-				<td>'.$row['qty'].'</td>
-				<td></td>
-				</tr>';
+				<td rowspan="'.$numItem.'"><a href="orderdetail.php?orderid='.$row['orderId'].'">'.$row['orderDate'].'</a></td>';
+			
+			while ($itemRow = mysqli_fetch_assoc($itemResult))
+			{
+				echo '<td>'.$itemRow['itemName'].'</td>
+					<td>'.$itemRow['qty'].'</td></tr><tr>';
+			}
+
+			echo '</tr>';
+
 		}
 		
 		echo '</table></div>';

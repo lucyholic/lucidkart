@@ -34,7 +34,7 @@
 			
 		$result = mysqli_query($conn, $editSql);
 		$_SESSION['userName'] = $firstName;
-		echo '<script>alert("Your information is updated");</script>';
+		$_SESISON['message'] = "Your information is updated";
 	}
 	
 	// sql setting
@@ -56,6 +56,7 @@
 	require_once('lib/menu.php');
 	
 	// body contents
+	echo "<font color='red'><strong>$message</strong></font>";
 	echo "<h2>".$_SESSION['userName']."'s Profile</h2>";
 ?>
 

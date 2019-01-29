@@ -1,13 +1,14 @@
 <?php
-    require_once('lib/header.php');	
-    
+    require_once('lib/header.php');		
+    require_once('lib/authentication.php');
+
     // title setting
     $title = "::LUCIDKART:: - Order management";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
     
-    require_once('lib/menu.php');
+    require_once('lib/adminmenu.php');
 	
 	if(empty($_GET['orderid']))
 		header('Location: ordermanagement.php');		
@@ -96,7 +97,7 @@ else
 
 echo '<a href="ordermanagement.php">Go back to order management page</a>';
 
-require_once('lib/footer.php');
+require_once('../lib/footer.php');
 
 ?>
 

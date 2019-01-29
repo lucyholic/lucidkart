@@ -100,7 +100,7 @@
 	echo "<h3>Item</h3>";
 	
 	//	itemSql
-	$itemResult = mysqli_query($conn, "SELECT * FROM orderDetail LEFT JOIN item ON orderDetail.itemId=item.itemId WHERE orderid='".$orderId."'");
+	$itemResult = mysqli_query($conn, "SELECT * FROM orderDetail JOIN item ON orderDetail.itemId=item.itemId WHERE orderid='".$orderId."'");
 	$total = (float)0;
 	
 	if ($itemResult -> num_rows == 0)

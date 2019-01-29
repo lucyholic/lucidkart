@@ -1,6 +1,11 @@
 <?php
 	require_once('lib/php_header.php');
 	
+	if (isset($_SESSION['message']))
+		$message = $_SESSION['message'];
+	else
+		$message = "";	
+
 	if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
 	{
 		echo "<script>alert('Log in to view cart.');
@@ -27,18 +32,8 @@
 			$sql = "SELECT * FROM item WHERE itemId=".$itemId;
 			$row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 			
-			if (($items[$itemId] + $qty) <= $row['onHand'])
-			{
-			    echo "<script>alert('".$row['itemName']." is added.');</script>";
-				$items[$itemId] += $qty;
-			}
-			
-			else
-			{
-			    echo "<script>alert('Quantity of item cannot be greater than the max quantity.');</script>";
-				$items[$itemId] = $row['onHand'];
-				
-			}
+			$message = $row['itemName']." is added.";
+			$items[$itemId] += $qty;
 			
 			$_SESSION['items'] = $items;
 
@@ -53,8 +48,7 @@
 			unset($items[$key]);
 			$_SESSION['items'] = $items;
 			
-			echo "<script>alert('Item is deleted.');
-				window.location = 'cart.php';</script>";
+			$message = "Item is deleted";
 		}
 	}
 	
@@ -66,8 +60,9 @@
 	
 	require_once('lib/menu.php');
 
+	echo "<p><font color=red><strong>$message</strong></font></p>";
 	echo "<h2>".$_SESSION['userName']."'s Cart</h2>";
-
+	
 	$total = (float)0;
 
 	if ($_SESSION['items'] == null)

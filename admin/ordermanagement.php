@@ -1,13 +1,19 @@
 <?php
-	require_once('lib/header.php');	
-	
+	require_once('lib/header.php');		
+    require_once('lib/authentication.php');
+    
 	// title setting
     $title = "::LUCIDKART:: - Order management";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
-	require_once('lib/menu.php');
+    require_once('lib/adminmenu.php');
+    
+    if (isset($_SESSION['message']))
+		$message = $_SESSION['message'];
+	else
+		$message = "";	
     
     $sql = "SELECT * FROM orderHeader";
 
@@ -23,7 +29,9 @@
     }
 
     $result = mysqli_query($conn, $sql);
-    ?>
+    echo "<font color='red'><strong>$message</strong></font>";
+ ?>
+
 
 <h2>Order Management</h2>
 <br />
@@ -59,5 +67,5 @@
 
     echo '</table>';
 
-    require_once('lib/footer.php');
+    require_once('../lib/footer.php');
 ?>

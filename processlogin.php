@@ -1,9 +1,6 @@
 <?php
-	session_start();
-	require("config/config.php");
-	require("lib/db.php");
-	$conn = db_init($config["host"], $config["duser"], $config["dpw"], $config["dname"]);
-	
+	// This line must be on the top
+	require_once('lib/php_header.php');
 	
 	$u = mysqli_real_escape_string($conn, $_POST['txtUserId']);
 	$p = mysqli_real_escape_string($conn, $_POST['txtPassword']);
@@ -27,26 +24,34 @@
 		
 		else
 		{
-		    echo "<script>alert('User ID or Password is wrong.');
-			    window.location='login.php';</script>";
+			$_SESSION['message'] = "User ID or Password is invalid";
+		    echo "<script>window.location='login.php';</script>";
 		}
 	}
 	
 	else 
 	{
-		echo "<script>alert('User ID not found.');
-			    window.location='login.php';</script>";
+		$_SESSION['message'] = "User ID not found";
+		echo "<script>window.location='login.php';</script>";
 	}
-?>
 
-<!DOCTYPE html>
-
-<html lang="en">
-	<head>
-		<title>Loggin in...</title>
-		<meta charset="utf-8">
-		<!-- <link rel="stylesheet" href="style.css"> -->
-		
-	</head>
 	
-</html>
+	// sql setting
+	
+	// title setting
+    $title = "::LUCIDKART:: - Loggin in...";
+    
+    // include css
+	// if it doesn't include any css other than home.css,
+	// declare it as an empty string ($css = "")
+	$css = '<link rel="stylesheet" type="text/css" href="css/item.css">';
+	
+	// menu
+	require_once('lib/menu.php');
+	
+	// body contents
+
+	// footer
+	require_once('lib/footer.php');
+
+?>
