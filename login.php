@@ -1,10 +1,16 @@
 <?php
     session_start();
     if (isset($_SESSION['userId']) || isset($_SESSION['userName']))
-    	{
-    	    echo "<script>alert('You already logged in.');
-			    window.location='index.php';</script>";
-    	}
+	{
+		echo "<script>alert('You already logged in.');
+			window.location='index.php';</script>";
+	}
+	
+	if (isset($_SESSION['message']))
+		$message = $_SESSION['message'];
+	else
+		$message = "";	
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +25,7 @@
 	</head>
 	
 	<body>
+	<div id="message"><font color='red'><strong><?= $message ?></strong></font></div>
 		<form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
 			<input type="text" name="txtUserId" placeholder="User ID"><br /><br />
 			<input type="password" name="txtPassword" placeholder="Password"><br /><br />
@@ -50,7 +57,7 @@
 	            return true;
 	        else 
             {
-                alert(error);
+                document.getElementById("message").innerHTML = "<font color='red'><strong>" + error + "</strong></font>";
                 return false;
             }
 	    }

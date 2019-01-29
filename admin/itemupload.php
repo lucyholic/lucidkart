@@ -12,11 +12,11 @@
 
 	if (isset($_POST['upload']))
 	{
-		$itemName = $_POST['txtItemName'];
-		$itemCategory = (int)$_POST['lstItemCategory'];
-		$itemPrice = (float)$_POST['txtItemPrice'];
+		$itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
+		$itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
+		$itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
 		$itemPrice = number_format($itemPrice, 2);
-		$description = $_POST['txtDescription'];
+		$description = mysqli_real_escape($conn, $_POST['txtDescription']);
 		$description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
 		$latestItem = isset($_POST['chkLatest']);
 		
@@ -42,21 +42,20 @@
 			
 			$result = mysqli_query($conn, $sql);
 			
-			echo "<script>alert('Item(".$itemName.") has been added.');
-			    window.location='itemmaintenance.php';</script>";
+			$_SESSION['message'] = "Item added";
+			echo "<script>window.location='itemmaintenance.php';</script>";
 		}
 		
 		else
 		{
-			$msg = $_FILES['imgItemImage']['error'];
-			echo "<script>alert(".$msg.");</script>
-				window.location='itemmaintenance.php'";
+			$_SESSION['message'] = $_FILES['imgItemImage']['error'];
+			echo "window.location='itemmaintenance.php'";
 		}
 	}
 	
 ?>
 
-<form name="itemupload" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Item();" enctype="multipart/form-data">
+<form name="itemupload" action="<?= $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Item();" enctype="multipart/form-data">
 
 	Item Name: <input type="text" name="txtItemName" id="txtItemName" onfocusout="Trim('txtItemName');"><br />
 	Item Category: <select name="lstItemCategory" id="lstItemCategory">
@@ -71,6 +70,7 @@
 		}
 	?>
 		</select><br />
+
 	Item Price: <input type="text" name="txtItemPrice" id="txtItemPrice" onfocusout="Trim('txtItemPrice');"><br />
 	Item Thumbnail: <input type="hidden" name="MAX_FILE_SIZE" value="3145728" />
 	<input type="file" accept="image/*" name="imgItemImage" id="imgItemImage" onchange="CheckImage();"/><br />

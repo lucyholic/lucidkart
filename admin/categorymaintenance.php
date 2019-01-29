@@ -10,7 +10,10 @@
 	
 	require_once('lib/adminmenu.php');
 	
-    $message = "";
+    if (isset($_SESSION['message']))
+		$message = $_SESSION['message'];
+	else
+		$message = "";	
 
     if(isset($_POST['update']))
     {
@@ -52,66 +55,53 @@
     }
 ?>
 
-<!DOCTYPE html>
+<p><font color="red"><strong><?= $message ?></strong></font></p>
+<h2>Category Maintenance</h2>
 
-<html lang="en">
-	<head>
-		<title>Category Maintenance Page</title>
-		<meta charset="utf-8">
-	</head>
+<table>
+    <tr>
+        <th>Category Name</th>
+        <th>Delete</th>
+    </tr>
 
-    <body>
-    <h2>Category Maintenance</h2>
+<?php
+    $sql = "SELECT * FROM category";
+    $result = mysqli_query($conn, $sql);
 
-    <p><font color="red"><strong><?php echo $message ?></strong></font></p>
-
-    <table>
-        <tr>
-            <th>Category Name</th>
-            <th>Delete</th>
-        </tr>
-
-
-    <?php
-        $sql = "SELECT * FROM category";
-        $result = mysqli_query($conn, $sql);
-
-        while($row = mysqli_fetch_assoc($result))
-        {
-            $confirm = '"Delete Category '.$row['categoryName'].'?"';
-            $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
-
-            $form = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
-            <input type="hidden" name="txtId" id="txtId" value="'.$row['categoryId'].'" />
-            <input type="text" name="txtName" id="txtName" value="'.$row['categoryName'].'" />
-            <input type="submit" name="update" value="Update" />
-            </form>';
-        
-            echo "<tr>
-                <td>$form</td>
-                <td><a href='javascript:if(confirm(".$confirm.")) document.location.href=".$delete."'>Delete</a></td>
-                </tr>";
-        }
-
-    ?>
-
-    </table>
-    
-    <div id="add">
-    </div>
-
-    <input type="button" value="Add a Category" onclick="AddCategory();" />
-
-    </body>
-    <script>
-    // add a div for new category
-    function AddCategory()
+    while($row = mysqli_fetch_assoc($result))
     {
-        var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
-        document.getElementById("add").innerHTML = newCategory;
+        $confirm = '"Delete Category '.$row['categoryName'].'?"';
+        $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
+
+        $form = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
+        <input type="hidden" name="txtId" id="txtId" value="'.$row['categoryId'].'" />
+        <input type="text" name="txtName" id="txtName" value="'.$row['categoryName'].'" />
+        <input type="submit" name="update" value="Update" />
+        </form>';
+    
+        echo "<tr>
+            <td>$form</td>
+            <td><a href='javascript:if(confirm(".$confirm.")) document.location.href=".$delete."'>Delete</a></td>
+            </tr>";
     }
-    </script>
-</html>
+
+?>
+
+</table>
+
+<div id="add">
+</div>
+
+<input type="button" value="Add a Category" onclick="AddCategory();" />
+
+<script>
+// add a div for new category
+function AddCategory()
+{
+    var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
+    document.getElementById("add").innerHTML = newCategory;
+}
+</script>
 
 <?php
 

@@ -178,17 +178,6 @@ function SearchCheck()
 	return true;
 }
 
-function MaxCheck(max)
-{
-	var input = document.getElementById('numQty').value;
-	
-	if (input > max)
-	{
-		alert('You cannot order more than max quantity.');
-		document.getElementById('numQty').value = max;
-	}
-}
-
 function CheckQty()
 {
 	var qty = document.getElementById('numQty').value;

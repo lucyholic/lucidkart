@@ -8,7 +8,12 @@
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
-	require_once('lib/adminmenu.php');
+    require_once('lib/adminmenu.php');
+    
+    if (isset($_SESSION['message']))
+		$message = $_SESSION['message'];
+	else
+		$message = "";	
     
     $sql = "SELECT * FROM orderHeader";
 
@@ -24,7 +29,9 @@
     }
 
     $result = mysqli_query($conn, $sql);
-    ?>
+    echo "<font color='red'><strong>$message</strong></font>";
+ ?>
+
 
 <h2>Order Management</h2>
 <br />

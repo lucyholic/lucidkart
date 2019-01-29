@@ -44,6 +44,7 @@ $dispatch = "UPDATE orderHeader SET dispatchedDate = '$date'
     WHERE orderId = '$id'";
 mysqli_query($conn, $dispatch);
 
+$_SESSION['message'] = "Order dispatched";
 echo '<script>window.location = "ordermanagement.php";</script>';
 
 ?>

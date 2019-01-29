@@ -3,15 +3,21 @@
 	require_once('lib/authentication.php');
 
 	if(empty($_GET['itemid']))
+	{
+		$_SESSION['message'] = "Invalid access";
 		echo "<script>window.location='notfound.php'</script>";
+	}
 	
-	$id = $_GET['itemid'];
+	$id = mysqli_real_escape_string($conn, $_GET['itemid']);
 	
-	$sql = "SELECT * FROM item WHERE itemId=".$id;
+	$sql = "SELECT 0 FROM item WHERE itemId=".$id;
 	$result = mysqli_query($conn, $sql);
 	
 	if ($result -> num_rows == 0)
+	{
+		$_SESSION['message'] = "No item found";
 		echo "<script>window.location='itemmaintenance.php'</script>";
+	}
 	
 	$row = mysqli_fetch_assoc($result);
 	
@@ -20,5 +26,6 @@
 	$sql = "DELETE FROM item WHERE itemId='".$id."'";
 	$result = mysqli_query($conn, $sql);
 
+	$_SESSION['message'] = "Item deleted";
 	echo "<script>window.location='itemmaintenance.php'</script>";
 ?>
