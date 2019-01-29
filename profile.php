@@ -9,6 +9,8 @@
 			window.location = "index.php"</script>';
 	}
 	
+	$message = "";
+
 	// when edit profile
 	else if (isset($_POST['edit']))
 	{
@@ -34,7 +36,7 @@
 			
 		$result = mysqli_query($conn, $editSql);
 		$_SESSION['userName'] = $firstName;
-		$_SESISON['message'] = "Your information is updated";
+		$message = "Your information is updated";
 	}
 	
 	// sql setting
