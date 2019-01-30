@@ -63,7 +63,7 @@
 	
 	require_once('lib/menu.php');
 
-	echo "<p><font color=red><strong>$message</strong></font></p>";
+	echo "<div id='message'><font color=red><strong>$message</strong></font></div>";
 	echo "<h2>".$_SESSION['userName']."'s Cart</h2>";
 	
 	$total = (float)0;
@@ -121,7 +121,7 @@
 	function Order()
 	{		
 		if ('tblCart' == null)
-			alert('Cart is Empty!');
+			document.getElementById("message").innerHTML = "<font color=red><strong>Cart is Empty!</strong></font>";
 		else
 			window.location = 'order.php';
 	}

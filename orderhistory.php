@@ -34,13 +34,14 @@
 	else
 	{
 		echo '<p>Click Order Date to see Detail</p>
-			<div style="overflow-x:auto;">
+			<div style="overflow-x:auto;"><br />
 			<table>
     			<tr>
     				<th>Order Date</th>
 					<th>Order Item</th>
 					<th>Quantity</th>
-    			</tr>';
+					<th>Shipped Date</th>
+				</tr>';
 		
 		while($row = mysqli_fetch_assoc($orderResult))
 		{
@@ -51,25 +52,39 @@
 			$itemResult = mysqli_query($conn, $itemSql);
 			$numItem = mysqli_num_rows($itemResult);
 
+			// Display shipped date
+			if ($row['dispatchedDate'] == NULL)
+			{
+				$shipped = "Preparing for shipping...";
+			}
+
+			else
+			{
+				$shipped = $row['dispatchedDate'];
+			}
+			
 			if ($numItem == 0)
 				$numItem = 1;
 
 			echo '<tr>
 				<td rowspan="'.$numItem.'"><a href="orderdetail.php?orderid='.$row['orderId'].'">'.$row['orderDate'].'</a></td>';
 			
+			$count = 0;
 			while ($itemRow = mysqli_fetch_assoc($itemResult))
 			{
 				echo '<td>'.$itemRow['itemName'].'</td>
-					<td>'.$itemRow['qty'].'</td></tr><tr>';
+					<td>'.$itemRow['qty'].'</td>';
+				
+				if ($count == 0)
+					echo '<td rowspan="'.$numItem.'">'.$shipped.'</td></tr>';
+				
+				echo '</tr>';
+				$count++;
 			}
-
-			echo '</tr>';
-
 		}
 		
 		echo '</table></div>';
 	}
-	
 
 	// footer
 	require_once('lib/footer.php');

@@ -19,7 +19,6 @@
 			
 			echo "<script>alert('Welcome, ".$_SESSION['userName']."!');
 			    window.location='index.php';</script>";
-			
 		}
 		
 		else
