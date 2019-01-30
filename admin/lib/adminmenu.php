@@ -55,6 +55,7 @@
 				<a href='categorymaintenance.php'>Category Maintenance</a>
 				<a href='ordermanagement.php'>Order Management</a>
 				<a href='stockmanagement.php'>Stock Management</a>
+				<a href='adminlogout.php'>Admin Logout</a>
 			</div>
 		</div>";
 
