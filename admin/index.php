@@ -7,6 +7,7 @@
     // include css
     $css = '<link rel="stylesheet" type="text/css" href="../css/admin/index.css">';
     $message = "";
+    $adminpassword = 'admin123';
 
     if (isset($_POST['adminlogin']))
     {
@@ -28,6 +29,7 @@
 ?>
 
 <h2>Admin Login</h2>
+<h3>password: <?= $adminpassword?></h3>
 <p><font color=red><strong><?= $message ?></strong></font></p><br />
 <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
 
@@ -41,7 +43,6 @@
 
     else
     {
-	
 	    require_once('lib/adminmenu.php');
     
 ?>
