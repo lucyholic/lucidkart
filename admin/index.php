@@ -1,4 +1,12 @@
 <?php
+/*
+
+admin index page
+
+if admin session is not set, displays admin login page,
+or display admin menu
+
+*/
     require_once('lib/header.php');	
 
     // title setting
@@ -9,6 +17,7 @@
     $message = "";
     $adminpassword = 'admin123';
 
+    // when admin login is attemped, check the password
     if (isset($_POST['adminlogin']))
     {
         $pw = $_POST['txtPassword'];
@@ -23,7 +32,8 @@
             $_SESSION['admin'] = "authenticated";
         }
     }
-
+    
+    // if admin session is not set, display admin login page
     if (!isset($_SESSION['admin']))
     {
 ?>
@@ -46,6 +56,8 @@
 
 <?php
     }
+
+    // Display admin index page
 
     else
     {
@@ -86,7 +98,6 @@
     </div>
 
 <?php
-
     require_once('../lib/footer.php');
-}
+    }
 ?>

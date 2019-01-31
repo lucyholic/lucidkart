@@ -1,12 +1,11 @@
 <?php	
-
+	require_once('lib/php_header.php');
+	
     // title setting
     $title = "::LUCIDKART::";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="css/index.css">';
-    
-	require_once('lib/php_header.php');
 	
 	require_once('lib/menu.php');
 	
@@ -49,7 +48,7 @@ else
 	{
 		$id = $row['itemId'];
 		echo '<div class="item">
-				<a href="item.php?itemid='.$id.'" class="itemName">
+				<a href="iteminfo.php?itemid='.$id.'" class="itemName">
 					<div class="overlay"><div class="description">'.$row['description'].'</div></div>
 					<img src="'.$row['itemImage'].'" width="300" height="400"><br />
 					<p>'.$row['itemName'].'</p>
