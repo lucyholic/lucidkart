@@ -57,7 +57,7 @@
 	require_once('lib/menu.php');
 	
 	// body contents
-	echo "<font color='red'><strong>$message</strong></font>";
+	echo '<span style="color: red; font-weight: bold">'.$message.'</span>';
 	echo "<h2>".$_SESSION['userName']."'s Profile</h2>";
 ?>
 

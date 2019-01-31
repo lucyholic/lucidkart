@@ -48,7 +48,7 @@
 		$result = mysqli_query($conn, "SELECT * FROM item");
 	}
 
-	echo "<font color='red'><strong>$message</strong></font>";
+	echo "<span style='color: red; font-weight: bold'>$message</span>";
 ?>
 
 	<h2>Item Maintenance</h2>

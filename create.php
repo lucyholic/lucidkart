@@ -1,51 +1,58 @@
 <?php
-	require("config/config.php");
-	require("lib/db.php");
-	$conn = db_init($config["host"], $config["duser"], $config["dpw"], $config["dname"]);
+	require("lib/php_header.php");
+	$_SESSION['create'] = "create";
+	$message = "";
 
 	if (isset($_POST['create']))
 	{
-		$userId = mysqli_real_escape_string($conn, $_POST['txtUserId']);
-		$password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-		$firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
-		$lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
-		$phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
-		$email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
-		$address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
-		$city = mysqli_real_escape_string($conn, $_POST['txtCity']);
-		$province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
-		$postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
+		try
+		{
+			$userId = mysqli_real_escape_string($conn, $_POST['txtUserId']);
+			$password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
+			$firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
+			$lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
+			$phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+			$email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
+			$address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
+			$city = mysqli_real_escape_string($conn, $_POST['txtCity']);
+			$province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+			$postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
 
-		
-		$sql = "INSERT INTO customer (userId, 
-			password, 
-			firstName, 
-			lastName, 
-			phone, 
-			email, 
-			address, 
-			city, 
-			province, 
-			postalCode) VALUES('".		
-			$userId."', '".
-			$password."', '".
-			$firstName."', '".
-			$lastName."', '".
-			$phone."', '".
-			$email."', '".
-			$address."', '".
-			$city."', '".
-			$province."', '".
-			$postalCode."')";
 			
-		$result = mysqli_query($conn, $sql);
-		
-		echo "<script>alert('Account Created for".$firstName." (User Id: ".$userId.")');
-		    window.location='login.php';</script>";
-		
-		echo "Account Created for $firstName (User Id: $userId)<br />
-			<a href='login.php'>Log in</a>";
-		
+			$sql = "INSERT INTO customer (userId, 
+				password, 
+				firstName, 
+				lastName, 
+				phone, 
+				email, 
+				address, 
+				city, 
+				province, 
+				postalCode) VALUES('".		
+				$userId."', '".
+				$password."', '".
+				$firstName."', '".
+				$lastName."', '".
+				$phone."', '".
+				$email."', '".
+				$address."', '".
+				$city."', '".
+				$province."', '".
+				$postalCode."')";
+				
+			$result = mysqli_query($conn, $sql);
+			
+			echo "<script>alert('Account Created for".$firstName." (User Id: ".$userId.")');
+				window.location='login.php';</script>";
+			
+			echo "Account Created for $firstName (User Id: $userId)<br />
+				<a href='login.php'>Log in</a>";
+		}
+
+		catch(Exception $ex)
+		{
+			$message = "Try again (Sign up Error: ".$this.logException($ex).")"; 
+		}
 	}
 ?>
 
@@ -63,11 +70,11 @@
 	</head>
 	
 	<body>
+		<span style="color: red; font-weight: bold"><?= $message ?></span>
 	    <h1 id="logo">Lucid Kart</h1>
 		<h1>Sign up</h1>
-		<form name="create" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Create();">
-			<input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" onfocusout="Trim('txtUserId');"><br /><br />
-			<!-- ID Duplication Check -->
+		<form name="create" action="<?= $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Create();">
+			<input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" onfocusout="Trim('txtUserId');" onclick="OpenIdCheck();" readonly /><br /><br />
 			<input type="password" name="txtPassword" id="txtPassword" placeholder="Password" onfocusout="Trim('txtPassword');"><br /><br />
 			<input type="password" name="txtPasswordCheck" id="txtPasswordCheck" placeholder="Re-enter Password" onfocusout="Trim('txtPasswordCheck');"><br /><br />
 			<input type="text" name="txtFirstName" id="txtFirstName" placeholder="First Name" onfocusout="Trim('txtFirstName');">
@@ -94,4 +101,12 @@
 			<input type="reset" value="Reset" class="button">
 		</form>
 	</body>
+
+	<script>
+	function OpenIdCheck()
+	{
+		window.open("idcheck.php", "", "width=400, height=300");
+	}
+	
+	</script>
 </html>

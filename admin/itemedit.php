@@ -79,7 +79,7 @@
 	else
 		$checked = "checked";
 
-	echo $error;
+	echo '<span style="color: red; font-weight: bold">'.$error.'</span>';
 	
 ?>
 

@@ -28,7 +28,7 @@
 	</head>
 	
 	<body>
-	<div id="message"><font color='red'><strong><?= $message ?></strong></font></div>
+	<div id="message"><span style="color: red; font-weight: bold"><?= $message ?></span></div>
 		<form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
 			<input type="text" name="txtUserId" placeholder="User ID"><br /><br />
 			<input type="password" name="txtPassword" placeholder="Password"><br /><br />
@@ -60,7 +60,7 @@
 	            return true;
 	        else 
             {
-                document.getElementById("message").innerHTML = "<font color='red'><strong>" + error + "</strong></font>";
+                document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
                 return false;
             }
 	    }

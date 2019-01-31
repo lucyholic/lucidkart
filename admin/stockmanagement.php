@@ -15,7 +15,7 @@
 	
 	if(isset($_POST['update']))
 	{
-		$numCount= $_POST['count'];
+		$numCount = $_POST['count'];
 
 		for($i = 0; $i < $numCount; $i++)
 		{
@@ -32,7 +32,7 @@
 
 	if (isset($_GET['search']) && trim($_GET['search']) != "")
 	{
-		$keyword = $_GET['search'];
+		$keyword = mysqli_real_escape_string($conn, $_GET['search']);
 		$sql = "SELECT * FROM item WHERE itemName LIKE '%".$keyword."%'";
 		$result = mysqli_query($conn, $sql);
 		
@@ -52,7 +52,10 @@
 ?>
 
 <h2>Stock Management</h2>
-<p><font color=red><strong><?= $message ?></strong></font></p>
+
+<?php
+	echo "<span style='color: red; font-weight: bold'>$message</span>";
+?>
 
 <form name="searchform" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
 	<input type="text" name="search" id="search" placeholder="Search Item..">
@@ -66,7 +69,6 @@
 	<th>Item Name</th>
 	<th>On Hand</th>
 	</tr>
-
 
 <?php
 	

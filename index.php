@@ -13,7 +13,7 @@
 	// If any item is searched
 	if (isset($_GET['search']) && trim($_GET['search']) != "")
 	{
-		$keyword = $_GET['search'];
+		$keyword = mysqli_real_escape_string($conn, $_GET['search']);
 		$sql = "SELECT * FROM item WHERE itemName LIKE '%".$keyword."%'";
 		$result = mysqli_query($conn, $sql);
 		
@@ -27,7 +27,7 @@
 	// when menu bar is clicked
 	else if (isset($_GET['category']))
 	{
-		$category = $_GET['category'];
+		$category = mysqli_real_escape_string($conn, $_GET['category']);
 		$sql = "SELECT * FROM item WHERE itemCategory=".$category;
 		$result = mysqli_query($conn, $sql);
 		
@@ -60,9 +60,7 @@ else
 		else
 			echo '<p class="itemPrice">Sold Out</p></div>';
 	}
-	
+	echo '</div';
 	
 	require_once('lib/footer.php');
-echo '</div>';
-echo '</main>';
 ?>

@@ -29,8 +29,14 @@
 ?>
 
 <h2>Admin Login</h2>
-<h3>password: <?= $adminpassword?></h3>
-<p><font color=red><strong><?= $message ?></strong></font></p><br />
+
+<?php
+
+    echo "password: $adminpassword";
+    echo "<span style='color: red; font-weight: bold'>$message</span>";
+
+?>
+
 <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
 
 <input type="password" name="txtPassword" placeholder="Admin Password"><br /><br />

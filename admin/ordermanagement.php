@@ -32,7 +32,7 @@
     }
 
     $result = mysqli_query($conn, $sql);
-    echo "<font color='red'><strong>$message</strong></font>";
+    echo "<span style='color: red; font-weight: bold'>$message</span>";
  ?>
 
 

@@ -30,7 +30,7 @@
 <script>
     function LoginAlert()
     {
-        document.getElementById("message").innerHTML = "<font color='red'><strong>Login First</strong></font>";
+        document.getElementById("message").innerHTML = "<span style='color: red; font-weight: bold'>Log in first</span>";
     }
 </script>
 

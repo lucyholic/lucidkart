@@ -20,8 +20,8 @@
 
     if(isset($_POST['update']))
     {
-        $id = $_POST['txtId'];
-        $name = $_POST['txtName'];
+        $id = mysqli_real_escape_string($conn, $_POST['txtId']);
+        $name = mysqli_real_escape_string($conn, $_POST['txtName']);
 
         $search = "SELECT 0 FROM category WHERE categoryName = '".$name."'";
         $result = mysqli_query($conn, $search);
@@ -58,7 +58,7 @@
     }
 ?>
 
-<p><font color="red"><strong><?= $message ?></strong></font></p>
+<span style="color: red; font-weight: bold"><?= $message ?></span>
 <h2>Category Maintenance</h2>
 
 <table>
