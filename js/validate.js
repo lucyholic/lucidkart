@@ -85,9 +85,7 @@ function Validate_Create()
 
 	
 	if (userId == "")
-		error += "User ID cannot be blank.\n";	
-	else if (userId.length < 3 || userId.length > 15)
-		error += "User ID must be between 3 and 15 characters.\n";
+		error += "Check ID First.\n";
 	
 	if (password == "")
 		error += "Password cannot be blank.\n";	
