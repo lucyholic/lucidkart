@@ -63,7 +63,7 @@
 	
 	require_once('lib/menu.php');
 
-	echo "<div id='message'><font color=red><strong>$message</strong></font></div>";
+	echo "<span id='message' style='color: red; font-weight: bold'>$message</span>";
 	echo "<h2>".$_SESSION['userName']."'s Cart</h2>";
 	
 	$total = (float)0;
