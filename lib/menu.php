@@ -5,6 +5,7 @@
 	<head>
 		<title><?= $title ?></title>
 		<meta charset="utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="css/normalize.css">
 		<link rel="stylesheet" type="text/css" href="css/header.css">
 		<link rel="stylesheet" type="text/css" href="css/footer.css">
@@ -14,6 +15,9 @@
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script src="js/validate.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	</head>
 	
 	<body>
@@ -52,7 +56,8 @@
 			
 			if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
     		{
-    			echo "<a href='login.php'>Sign in</a>";
+                
+    			echo "<a data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'>Sign in</a>";
     		}
             else
     		{   		
@@ -129,4 +134,25 @@
 	
 	<hr>
 	
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:330px;height:400px;">
+        <div class="modal-content" style="height:100%;">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="modal-body">
+        <form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
+                <input type="text" name="txtUserId" placeholder="User ID"><br /><br />
+                <input type="password" name="txtPassword" placeholder="Password"><br /><br />
+                <input type="submit" id="submit" value="Login"><br /><br />
+                
+                <a href="create.php">Create a new account</a>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
 	<main>

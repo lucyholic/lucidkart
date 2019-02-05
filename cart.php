@@ -15,6 +15,7 @@
 		    window.location = 'index.php';</script>";
 	}
 
+
 	else
 	{
 		// if no session for cart, set it first
@@ -63,7 +64,11 @@
 	
 	require_once('lib/menu.php');
 
-	echo "<span id='message' style='color: red; font-weight: bold'>$message</span>";
+	if ($message!=null)
+	{
+		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
+	}
+
 	echo "<h2>".$_SESSION['userName']."'s Cart</h2>";
 	
 	$total = (float)0;

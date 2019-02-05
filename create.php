@@ -1,9 +1,24 @@
 <?php
 require("lib/php_header.php");
 
+// sql setting
+$orderSql = "SELECT *";
+	
+$orderResult = mysqli_query($conn, $orderSql);
+
+// title setting
+$title = "::LUCIDKART:: -";
+    
+// include css
+$css = '<link rel="stylesheet" type="text/css" href="css/login.css">';
+
+// menu
+require_once('lib/menu.php');
+
 $message = "";
 $checkedId = "";
 $isChecked = false;
+
 
 // if id is submitted for duplication check
 if (isset($_POST['txtCheckId']))
@@ -27,6 +42,7 @@ if (isset($_POST['txtCheckId']))
         }    
     }
 }
+
 
 // if form submitted, add customer to database
 if (isset($_POST['create']))
@@ -80,34 +96,26 @@ if (isset($_POST['create']))
         $message = "Try again (Sign up Error: ".$this.logException($ex).")"; 
     }
 }
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Create an account page</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/create.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/validate.js"></script>
-</head>
-
-<body>
-    
-    <h1 id="logo">Lucid Kart</h1>
-    <h1>Sign up</h1>
-    <p><span id="message" style="color: red; font-weight: bold"><?= $message ?></span></p>
-<?php
 
 // If isChecked is false, display userId input only
 if ($isChecked == false)
 {
     ?>
+    
 
-    <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return ID_Check();">
-    <input type="text" name="txtCheckId" id="txtCheckId" placeholder="Enter ID" />
-    <input type="submit" name="idCheck" id="idCheck" value="Check User ID" class="button" />
+    <form id="mainSignIn" method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return ID_Check();">
+        <h1>Sign Up</h1>	
+        <br />
+        
+        
+        <?php
+            // todo: remove alert box when message is null
+            // when doing if ($message!=null), the form is not being validated
+            echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	            
+        ?>
+
+        <input class="signin" type="text" name="txtCheckId" id="txtCheckId" placeholder="Enter ID" /><br /><br />
+        <input class="submit" type="submit" name="idCheck" id="idCheck" value="Check User ID" /><br /><br />
     </form>
 
     <?php

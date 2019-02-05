@@ -1,5 +1,7 @@
 <?php
-    session_start();
+	// This line must be on the top
+	require_once('lib/php_header.php');
+	
     if (isset($_SESSION['userId']) || isset($_SESSION['userName']))
 	{
 		echo "<script>alert('You already logged in.');
@@ -13,34 +15,43 @@
 	}
 	else
 		$message = "";	
+		
+	// sql setting
+	$orderSql = "SELECT *";
+	
+	$orderResult = mysqli_query($conn, $orderSql);
+
+	// title setting
+	$title = "::LUCIDKART:: -";
+		
+	// include css
+	$css = '<link rel="stylesheet" type="text/css" href="css/login.css">';
+
+	// menu
+	require_once('lib/menu.php');
 
 ?>
 
-<!DOCTYPE html>
+		<form id="mainSignIn" name="login" action="processlogin.php" method="post" onsubmit="return Check();">
+			<h1>Sign In</h1>	
+			<br />
 
-<html lang="en">
-	<head>
-		<title>Log in page</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="css/normalize.css">
-		<link rel="stylesheet" type="text/css" href="css/login.css">		
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	</head>
-	
-	<body>
-		<span id="message" style="color: red; font-weight: bold"><?= $message ?></span>
-		<form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
-			<input type="text" name="txtUserId" placeholder="User ID"><br /><br />
-			<input type="password" name="txtPassword" placeholder="Password"><br /><br />
-			<input type="submit" id="submit" value="Login"><br /><br />
+			<?php
+				if ($message!=null)
+				{
+					echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
+				}
+			?>
+
+			<input class="signin" type="text" name="txtUserId" placeholder="User ID"><br /><br />
+			<input class="signin" type="password" name="txtPassword" placeholder="Password"><br /><br />
+			<input class="submit" type="submit" id="submit" value="Login"><br /><br />
+
 			
 		    <a href="create.php">Create a new account</a>
 		</form>
 		
-		<h1>Sign in</h1>
-		<h1 id="logo">Lucid Kart</h1>
 		
-	</body>
 	
 	<script>
 	    function Check()
@@ -60,9 +71,11 @@
 	            return true;
 	        else 
             {
-                document.getElementById("message").innerHTML = error;
+                document.getElementById("message").innerHTML =  '<span style="color: red; font-weight: bold">' + error + '</span>';
                 return false;
             }
 	    }
 	</script>
-</html>
+	
+<!--footer-->
+<?php require_once('lib/footer.php');?>

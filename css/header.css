@@ -22,7 +22,6 @@ body{
 
 /******************* Header styles *******************/
 header {
-    height: 40px;
     background-color: white;
     text-align: center;
     /* border-bottom: solid black; */
@@ -244,10 +243,11 @@ h2 {
 }
 
 hr {
-    height: 1px;
+    height: 2px;
     color: solid black;
     /* display: block; */
     /* height: 1px; */
+    margin-top: 3px;
     /* border: 0; */
     border-color: black;
     border-style: solid;
@@ -425,3 +425,31 @@ hr {
   -ms-transform: translate(-100%, -50%);
   transform: translate(-100%, -50%);
 }
+
+/* input fields */
+
+input {
+	width: 100%;
+	height: 40px;
+	/* margin: auto; */
+	/* margin: 19px 0; */
+}
+
+
+.submit {
+	background: linear-gradient(132deg, #bae0e363, #f17b914a), white;
+	background-size: 400% 10%;
+	background: #000000;
+	animation: BackgroundGradient 30s ease infinite;
+	color: white;
+	/* border: solid black 1px; */
+	/* width: 202px; */
+	border: none;
+	/* height: 66px; */
+	bottom: 0px;
+	/* right: -79px; */
+	position: relative;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
