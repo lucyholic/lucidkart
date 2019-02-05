@@ -21,6 +21,7 @@
 	
 	$row = mysqli_fetch_assoc($result);
 	
+	// delete img file
 	$img_path = "../".$row['itemImage'];
 	unlink($img_path);	
 	$sql = "DELETE FROM item WHERE itemId='".$id."'";

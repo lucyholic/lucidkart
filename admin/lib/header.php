@@ -1,4 +1,9 @@
 <?php
+/*
+
+Includes db connection
+
+*/
     session_start();
     require("../config/config.php");
 	require("../lib/db.php");

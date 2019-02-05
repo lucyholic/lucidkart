@@ -1,6 +1,6 @@
         </main>
         <footer>
-            Footer - Lucy and Karen
+            <p>LUCIDKART &copy;2019 - Lucy and Karen </p>
         </footer>    
 	</body>
 </html>
