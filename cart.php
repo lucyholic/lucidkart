@@ -64,7 +64,11 @@
 	
 	require_once('lib/menu.php');
 
-	echo "<div id='message'><font color=red><strong>$message</strong></font></div>";
+	if ($message!=null)
+	{
+		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
+	}
+
 	echo "<h2>".$_SESSION['userName']."'s Cart</h2>";
 	
 	$total = (float)0;
