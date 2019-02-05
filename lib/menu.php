@@ -57,7 +57,7 @@
 			if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
     		{
                 
-    			echo "<a data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'>Sign in</a>";
+    			echo "<a data-toggle='modal' data-target='#signInModal' data-whatever='@mdo'>Sign in</a>";
     		}
             else
     		{   		
@@ -134,11 +134,11 @@
 	
 	<hr>
 	
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="width:330px;height:400px;">
         <div class="modal-content" style="height:100%;">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"></span>
             </button>
@@ -147,7 +147,7 @@
         <form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
                 <input type="text" name="txtUserId" placeholder="User ID"><br /><br />
                 <input type="password" name="txtPassword" placeholder="Password"><br /><br />
-                <input type="submit" id="submit" value="Login"><br /><br />
+                <input class="submit" type="submit" id="submit" value="Login"><br /><br />
                 
                 <a href="create.php">Create a new account</a>
             </form>

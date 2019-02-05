@@ -70,9 +70,6 @@
 	            return true;
 	        else 
             {
-				<div class="alert alert-danger" role="alert">
-				A simple danger alert—check it out!
-				</div>
                 document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
                 return false;
             }
