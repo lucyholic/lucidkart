@@ -1,3 +1,14 @@
+<?php
+/*
+
+menu for admin menu
+
+javascript & css by Karen
+php & sql by Lucy
+
+*/
+
+?>
 
 <!DOCTYPE html>
 

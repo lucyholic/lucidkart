@@ -9,7 +9,8 @@
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
 	require_once('lib/adminmenu.php');
-	
+    
+    // set message
     if (isset($_SESSION['message']))
     {
         $message = $_SESSION['message'];
@@ -18,6 +19,7 @@
 	else
 		$message = "";	
 
+    // if update is executed, check if the name is duplicated
     if(isset($_POST['update']))
     {
         $id = mysqli_real_escape_string($conn, $_POST['txtId']);
@@ -76,12 +78,14 @@
         $confirm = '"Delete Category '.$row['categoryName'].'?"';
         $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
 
+        // form that passes category id as hidden and category name
         $form = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
         <input type="hidden" name="txtId" id="txtId" value="'.$row['categoryId'].'" />
         <input type="text" name="txtName" id="txtName" value="'.$row['categoryName'].'" />
         <input type="submit" name="update" value="Update" />
         </form>';
-    
+        
+        // link to delete the category
         echo "<tr>
             <td>$form</td>
             <td><a href='javascript:if(confirm(".$confirm.")) document.location.href=".$delete."'>Delete</a></td>
@@ -92,13 +96,14 @@
 
 </table>
 
+<!-- Div for a form for new category -->
 <div id="add">
 </div>
 
 <input type="button" value="Add a Category" onclick="AddCategory();" />
 
 <script>
-// add a div for new category
+// add a div for new category dynamically
 function AddCategory()
 {
     var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";

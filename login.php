@@ -46,6 +46,7 @@
 			<input class="signin" type="text" name="txtUserId" placeholder="User ID"><br /><br />
 			<input class="signin" type="password" name="txtPassword" placeholder="Password"><br /><br />
 			<input class="submit" type="submit" id="submit" value="Login"><br /><br />
+
 			
 		    <a href="create.php">Create a new account</a>
 		</form>
@@ -70,7 +71,11 @@
 	            return true;
 	        else 
             {
+<<<<<<< HEAD
                 document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
+=======
+                document.getElementById("message").innerHTML =  '<span style="color: red; font-weight: bold">' + error + '</span>';
+>>>>>>> 13f5edc4458948c2e21fbc45c53f7a8a186ce894
                 return false;
             }
 	    }
