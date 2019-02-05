@@ -1,23 +1,19 @@
 
+
 <!DOCTYPE html>
 
 <html lang="en">
 	<head>
-		<title><?= $title ?></title>
+		<title>::LUCIDKART:: - Karen's Cart</title>
 		<meta charset="utf-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="css/normalize.css">
 		<link rel="stylesheet" type="text/css" href="css/header.css">
 		<link rel="stylesheet" type="text/css" href="css/footer.css">
-		<?= $css ?>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="css/cart.css">        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script src="js/validate.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	</head>
 	
 	<body>
@@ -36,10 +32,7 @@
         <a href='index.php' id="home"><img src="images/logo.png" height="20px"></a>
         <a href='admin/index.php' id="home">tempadmin</a>
     	
-    	<?php
-    	    echo "<a href='cart.php' id='cart'><img src='images/cart1.png' height='25px'></a>";
-    	?>
-    	
+    	<a href='cart.php' id='cart'><img src='images/cart1.png' height='25px'></a>    	
     	<form id="content">
           <input type="text" name="input" class="input">
           <button type="reset" class="search"></button>
@@ -47,21 +40,7 @@
     	
         
     	
-		<?php
-			$list = mysqli_query($conn, "SELECT * FROM category ORDER BY categoryName");
-			while($menu = mysqli_fetch_assoc($list))
-			{
-				echo "<a href='index.php?category=".$menu['categoryId']."'>".$menu['categoryName']."</a>";
-			}
-			
-			if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
-    		{
-                
-    			echo "<a data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'>Sign in</a>";
-    		}
-            else
-    		{   		
-    			echo "<div class='dropdown'>
+		<a href='index.php?category=6'>Circles</a><a href='index.php?category=1'>Irregulars</a><a href='index.php?category=5'>Squares</a><a href='index.php?category=2'>Stars</a><a href='index.php?category=3'>Triangles</a><div class='dropdown'>
                 		<button class='dropbtn'>
                 			<a href='profile.php'>profile</a>
                 			<i class='fa fa-caret-down'></i>
@@ -70,13 +49,7 @@
                 			<a href='orderhistory.php'>order history</a>
             			    <a href='logout.php'>Sign out</a>
         		        </div>
-        		    </div>";
-    		}
-			
-    		
-    		
-    	?>
-    	
+        		    </div>    	
 		
     	<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction2()">&#9776;</a>
 	
@@ -134,25 +107,42 @@
 	
 	<hr>
 	
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:330px;height:400px;">
-        <div class="modal-content" style="height:100%;">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="modal-body">
-        <form name="login" action="processlogin.php" method="post" onsubmit="return Check();">
-                <input type="text" name="txtUserId" placeholder="User ID"><br /><br />
-                <input type="password" name="txtPassword" placeholder="Password"><br /><br />
-                <input type="submit" id="submit" value="Login"><br /><br />
-                
-                <a href="create.php">Create a new account</a>
-            </form>
-        </div>
-        </div>
-    </div>
-    </div>
-	<main>
+	<main><div id='message'><font color=red><strong></strong></font></div><h2>Karen's Cart</h2><div style='overflow-x:auto;'><table id='tblCart' name='tblCart'><tr>
+			<th>Item Name</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Subtotal</th>
+			<th>Delete</th>
+			</tr><tr>
+				<td><img src=images/green_circle.jpg>Green Circle</td>
+				<td>7.99</td>
+				<td>2</td>
+				<td>15.98</td>
+				<td><form name='hiddenForm' action=/cart.php method='post'>
+				<input type='hidden' name='txtKey' id='txtKey' value='24' />
+				<input type='submit' name='delete' value='Delete' /></form></td>
+			</tr><tr>
+				<td></td>
+				<td></td>
+				<td>Total:</td>
+				<td>15.98</td>
+			</tr></table></div>
+			<input type='button' value='Proceed to Order' onClick='Order();' />
+	<p>(Cart will be cleared when logout)</p>
+	
+	<script>
+	function Order()
+	{		
+		if ('tblCart' == null)
+			document.getElementById("message").innerHTML = "<font color=red><strong>Cart is Empty!</strong></font>";
+		else
+			window.location = 'order.php';
+	}
+	</script>
+	
+        </main>
+        <footer>
+            Footer - Lucy and Karen
+        </footer>    
+	</body>
+</html>	

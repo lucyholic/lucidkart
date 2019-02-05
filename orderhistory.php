@@ -20,7 +20,7 @@
     $title = "::LUCIDKART:: - ".$_SESSION['userName']."'s Order History";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="css/item.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="css/cart.css">';
 	
 	// menu
 	require_once('lib/menu.php');
