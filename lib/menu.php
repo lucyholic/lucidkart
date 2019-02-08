@@ -81,7 +81,8 @@
     	<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction2()">&#9776;</a>
 	
 	</nav>
-    	
+    
+    
     	
 	<script>
         window.onscroll = function() {myFunction()};

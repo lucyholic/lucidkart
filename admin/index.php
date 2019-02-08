@@ -17,6 +17,7 @@ or display admin menu
     $message = "";
     $adminpassword = 'admin123';
 
+    require_once('lib/adminmenu.php');
     // when admin login is attemped, check the password
     if (isset($_POST['adminlogin']))
     {
@@ -38,21 +39,21 @@ or display admin menu
     {
 ?>
 
-<h2>Admin Login</h2>
+        <form id="adminSignIn" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+            <h1>Admin Sign In</h1>	
+            <br />
 
-<?php
+            <?php
+            echo "password: $adminpassword";
+            if ($message != "") {
+                    echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
+                }
+            ?>
 
-    echo "password: $adminpassword";
-    echo "<span style='color: red; font-weight: bold'>$message</span>";
+            <input type="password" name="txtPassword" placeholder="Admin Password"><br /><br />
+            <input type="submit" class="submit" name="adminlogin" value="Admin Login"><br /><br />
 
-?>
-
-<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-
-<input type="password" name="txtPassword" placeholder="Admin Password"><br /><br />
-<input type="submit" name="adminlogin" value="Admin Login"><br /><br />
-
-</form>
+        </form>
 
 <?php
     }
@@ -64,37 +65,45 @@ or display admin menu
 	    require_once('lib/adminmenu.php');
     
 ?>
-    <div class='container'>
-        <a href='itemmaintenance.php'>
-            <div class='overlay'>
-                Item Maintenance
-            </div>
-            <img src='../images/admin/item.png' height='20%' width='20%'>
-        </a>
-    </div>
-    <div class='container'>
-        <a href='categorymaintenance.php'>
-            <div class='overlay'>
-                Category Maintenance
-            </div>
-            <img src='../images/admin/category.png' height='20%' width='20%'>
-        </a>
-    </div>
-    <div class='container'>
-        <a href='ordermanagement.php'>
-            <div class='overlay'>
-                Order Management
-            </div>
-            <img src='../images/admin/order.png' height='20%' width='20%'>
-        </a>
-    </div>
-    <div class='container'>
-        <a href='stockmanagement.php'>
-            <div class='overlay'>
-                Stock Management
-            </div>
-            <img src='../images/admin/stock.png' height='20%' width='20%'>
-        </a>
+    <div class="categories">
+        <div class='container'>
+            <a href='itemmaintenance.php'>
+                <!-- <img src='../images/admin/itemc.png' > -->
+                <div class='overlay'>
+                    Item Maintenance
+                </div>
+                <img src="../images/admin/itemc.png" alt="instagram logo" 
+                onmouseover="this.src='../images/admin/itemcc.png';" onmouseout="this.src='../images/admin/itemc.png';">
+
+            </a>
+        </div>
+        <div class='container'>
+            <a href='categorymaintenance.php'>
+                <div class='overlay'>
+                    Category Maintenance
+                </div>
+                <img src='../images/admin/categoryc.png' 
+                onmouseover="this.src='../images/admin/categorycc.png';" onmouseout="this.src='../images/admin/categoryc.png';">
+            </a>
+        </div>
+        <div class='container'>
+            <a href='ordermanagement.php'>
+                <div class='overlay'>
+                    Order Management
+                </div>
+                <img src='../images/admin/orderc.png' 
+                onmouseover="this.src='../images/admin/ordercc.png';" onmouseout="this.src='../images/admin/orderc.png';">
+            </a>
+        </div>
+        <div class='container'>
+            <a href='stockmanagement.php'>
+                <div class='overlay'>
+                    Stock Management
+                </div>
+                <img src='../images/admin/stockc.png' 
+                onmouseover="this.src='../images/admin/stockcc.png';" onmouseout="this.src='../images/admin/stockc.png';">
+            </a>
+        </div>
     </div>
 
 <?php
