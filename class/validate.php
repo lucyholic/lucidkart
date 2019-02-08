@@ -84,16 +84,17 @@ class Validate {
         return trim($newInput);
     }
 
-    static function Uniformize(object $o)
+    static function Uniformize($o)
     {
         if(property_exists($o, $userId))
-            $o->userId = strtolower($c->userId);
+            $o->userId = strtolower($o->userId);
             
-        $o->firstName = Validate::Capitalize($c->firstName);
-        $o->lastName = Validate::Capitalize($c->lastName);
-        $o->address = Validate::Capitalize($c->address);
-        $o->city = Validate::Capitalize($c->city);
-        $o->postalCode = strtoupper($c->postalCode);
+        $o->userId = strtolower($o->userId); 
+        $o->firstName = Validate::Capitalize($o->firstName);
+        $o->lastName = Validate::Capitalize($o->lastName);
+        $o->address = Validate::Capitalize($o->address);
+        $o->city = Validate::Capitalize($o->city);
+        $o->postalCode = strtoupper($o->postalCode);
     }
 
 }
