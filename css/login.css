@@ -25,10 +25,6 @@ input[type=text].signin, input[type=password].signin  {
   }
   
 
-a {
-    background-color: transparent;
-    color: black;
-}
 
 main {
     width: 100%;

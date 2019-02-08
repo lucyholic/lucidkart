@@ -453,3 +453,18 @@ input {
 	text-transform: uppercase;
 }
 
+/* modal login */
+input[type=text].signin, input[type=password].signin  {
+  width: 100%;
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid black;
+  font-size: 1.2em;
+  
+  padding: 1.5em;
+  letter-spacing: 1px;
+}
+
+.modal-content {
+  padding: 10px;
+}
