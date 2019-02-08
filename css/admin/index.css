@@ -1,3 +1,4 @@
+/* menu styles */
 .categories {    
     text-align: center;
     position: relative;
@@ -7,36 +8,15 @@
 
 .container {
     position: relative;
-  /*   text-align: center;
-    color: white;
-    display: inline-block; */
-
     width: 180px;
-    /* float: left; */
-    /* clear: right; */
     margin: 5px;
     display: inline-block;
   }
 
   .container img {      
-    /* max-height: 180px;
-    height: 100%;  
-    max-width: 180px; */
     width: 100%;
   }
-/*   
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-  }
-
-.overlay:hover {
-    background-color: 
-} */
-
+  
   #adminSignIn {
 	/*background-color: rgba(186, 212, 255, .5);*/
 	background-color: rgba(255, 255, 255, 0.85);
@@ -50,4 +30,9 @@
 	box-shadow: 36px 10px #b0b0b029;
 	shape-outside: border-box;
 	height: 500px;
+}
+
+h6 {
+  color: black;  
+	letter-spacing: 1px;
 }
