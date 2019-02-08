@@ -4,16 +4,16 @@ class Validate {
 
     static function ValidateCustomer(customer $c, bool $isAdd)
     {
-        $userId = trim($c->GetUserId()."");
-        $password = trim($c->GetPassword()."");
-        $firstName = trim($c->GetFirstName()."");
-        $lastName = trim($c->GetLastName()."");
-        $phone = trim($c->GetPhone()."");
-        $email = trim($c->GetEmail()."");
-        $address = trim($c->GetAddress()."");
-        $city = trim($c->GetCity()."");
-        $province = trim($c->GetProvince()."");
-        $postalCode = trim($c->GetPostalCode()."");
+        $userId = trim($c->userId."");
+        $password = trim($c->password."");
+        $firstName = trim($c->firstName."");
+        $lastName = trim($c->lastName."");
+        $phone = trim($c->phone."");
+        $email = trim($c->email."");
+        $address = trim($c->address."");
+        $city = trim($c->city."");
+        $province = trim($c->province."");
+        $postalCode = trim($c->postalCode."");
 
         $error = "";
 
@@ -68,7 +68,7 @@ class Validate {
 
     static function ValidateOrder()
     {
-        
+
     }
 
     static function Capitalize(string $input)
@@ -82,6 +82,18 @@ class Validate {
         }
 
         return trim($newInput);
+    }
+
+    static function Uniformize(object $o)
+    {
+        if(property_exists($o, $userId))
+            $o->userId = strtolower($c->userId);
+            
+        $o->firstName = Validate::Capitalize($c->firstName);
+        $o->lastName = Validate::Capitalize($c->lastName);
+        $o->address = Validate::Capitalize($c->address);
+        $o->city = Validate::Capitalize($c->city);
+        $o->postalCode = strtoupper($c->postalCode);
     }
 
 }

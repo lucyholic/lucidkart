@@ -50,26 +50,25 @@ if (isset($_POST['create']))
 {
     try
     {
-        $userId = mysqli_real_escape_string($conn, $_POST['txtUserId']);
-        $password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-        $firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
-        $lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
-        $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
-        $email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
-        $address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
-        $city = mysqli_real_escape_string($conn, $_POST['txtCity']);
-        $province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
-        $postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
+        $customer = new Customer();
 
-        $customer = new Customer(null, $userId, $password, $firstName, $lastName, 
-            $phone, $email, $address, $city, $province, $postalCode);
+        $customer->userId = mysqli_real_escape_string($conn, $_POST['txtUserId']);
+        $customer->password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
+        $customer->firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
+        $customer->lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
+        $customer->phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+        $customer->email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
+        $customer->address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
+        $customer->city = mysqli_real_escape_string($conn, $_POST['txtCity']);
+        $customer->province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+        $customer->postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
 
         if(Validate::ValidateCustomer($customer, true))
         {
             $sql = $customer->AddCustomer();
             mysqli_query($conn, $sql);
 
-            echo "<script>alert('Account Created for".$firstName." (User Id: ".$userId.")');
+            echo "<script>alert('Account Created for".$customer->firstName." (User Id: ".$customer->userId.")');
                 window.location='login.php';</script>";
         }
     }

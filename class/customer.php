@@ -13,78 +13,39 @@ class Customer{
     private $province;
     private $postalCode;
 
-    // basic constructor for customer
-    function __construct($customerId, $userId, $password, $firstName, $lastName, $phone, 
-        $email, $address, $city, $province, $postalCode)
+    // basic constructor of customer
+    function __construct()
     {
-        $this->customerId = $customerId;
-        $this->userId = strtolower($userId);
-        $this->password = $password;
-        $this->firstName = Validate::Capitalize($firstName);
-        $this->lastName = Validate::Capitalize($lastName);
-        $this->phone = $phone;
-        $this->email = $email;
-        $this->address = Validate::Capitalize($address);
-        $this->city = Validate::Capitalize($city);
-        $this->province = $province;
-        $this->postalCode = strtoupper($postalCode);
+        $this->customerId = null;
+        $this->userId = "";
+        $this->password = "";
+        $this->firstName = "";
+        $this->lastName = "";
+        $this->phone = "";
+        $this->email = "";
+        $this->address = "";
+        $this->city = "";
+        $this->province = "";
+        $this->postalCode = "";
     }
 
-    // Getters
-    public function GetUserId()
+    // Get and Set
+    public function __set( $name, $value ) 
     {
-        return $this->userId;
+        if (property_exists($this, $name))
+    	    $this->$name = $value;
     }
-
-    public function GetPassword()
+    
+    public function __get( $name ) 
     {
-        return $this->password;
+        if(property_exists($this, $name))
+            return $this->$name;
     }
-
-    public function GetFirstName()
-    {
-        return $this->firstName;
-    }
-
-    public function GetLastName()
-    {
-        return $this->lastName;
-    }
-
-    public function GetPhone()
-    {
-        return $this->phone;
-    }
-
-    public function GetEmail()
-    {
-        return $this->email;
-    }
-
-    public function GetAddress()
-    {
-        return $this->address;
-    }
-
-    public function GetCity()
-    {
-        return $this->city;
-    }
-
-    public function GetProvince()
-    {
-        return $this->province;
-    }
-
-    public function GetPostalCode()
-    {
-        return $this->postalCode;
-    }
-
 
     // Add a new customer
     public function AddCustomer()
     {
+        Validate::Uniformize($this);
         $sql = "INSERT INTO customer (userId, 
             password, 
             firstName, 
@@ -111,6 +72,7 @@ class Customer{
 
     public function EditCustomer()
     {
+        Validate::Uniformize($this);
         $sql = "UPDATE customer SET
 			firstName='".$this->firstName."', 
 			lastName='".$this->lastName."', 

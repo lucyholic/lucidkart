@@ -123,10 +123,8 @@ p{
 
 .banner {
     
-    
-    
       /* The image used */
-  background-image: url("/images/poly.jpg");
+  background-image: url("../images/poly.jpg");
 
   /* Set a specific height */
   min-height: 500px; 

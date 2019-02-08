@@ -18,23 +18,23 @@
 	{
 		try
 		{
-			$firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
-			$lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
-			$phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
-			$email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
-			$address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
-			$city = mysqli_real_escape_string($conn, $_POST['txtCity']);
-			$province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
-			$postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
+			$customer = new Customer();
 
-			$customer = new Customer($_SESSION['userId'], null, null, $firstName, $lastName, $phone,
-				$email, $address, $city, $province, $postalCode);
-			
+			$customer->customerId = $_SESSION['userId'];
+			$customer->firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
+			$customer->lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
+			$customer->phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+			$customer->email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
+			$customer->address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
+			$customer->city = mysqli_real_escape_string($conn, $_POST['txtCity']);
+			$customer->province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+			$customer->postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
+
 			if(Validate::ValidateCustomer($customer, false))
 			{
 				$editSql = $customer->EditCustomer();
 				mysqli_query($conn, $editSql);
-				$_SESSION['userName'] = $firstName;
+				$_SESSION['userName'] = $customer->firstName;
 				$message = "Your information is updated";
 			}
 		}
