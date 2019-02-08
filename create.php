@@ -1,13 +1,14 @@
 <?php
 require("lib/php_header.php");
 
+// class setting
+require_once("class/customer.php");
+require_once("class/validate.php");
+
 // sql setting
-$orderSql = "SELECT *";
-	
-$orderResult = mysqli_query($conn, $orderSql);
 
 // title setting
-$title = "::LUCIDKART:: -";
+$title = "::LUCIDKART:: - Create an Account";
     
 // include css
 $css = '<link rel="stylesheet" type="text/css" href="css/login.css">';
@@ -60,59 +61,41 @@ if (isset($_POST['create']))
         $province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
         $postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
 
-        
-        $sql = "INSERT INTO customer (userId, 
-            password, 
-            firstName, 
-            lastName, 
-            phone, 
-            email, 
-            address, 
-            city, 
-            province, 
-            postalCode) VALUES('".		
-            $userId."', '".
-            $password."', '".
-            $firstName."', '".
-            $lastName."', '".
-            $phone."', '".
-            $email."', '".
-            $address."', '".
-            $city."', '".
-            $province."', '".
-            $postalCode."')";
-            
-        mysqli_query($conn, $sql);
-        
-        echo "<script>alert('Account Created for".$firstName." (User Id: ".$userId.")');
-            window.location='login.php';</script>";
-        
-        echo "Account Created for $firstName (User Id: $userId)<br />
-            <a href='login.php'>Log in</a>";
+        $customer = new Customer(null, $userId, $password, $firstName, $lastName, 
+            $phone, $email, $address, $city, $province, $postalCode);
+
+        if(Validate::ValidateCustomer($customer, true))
+        {
+            $sql = $customer->AddCustomer();
+            mysqli_query($conn, $sql);
+
+            echo "<script>alert('Account Created for".$firstName." (User Id: ".$userId.")');
+                window.location='login.php';</script>";
+        }
     }
 
     catch(Exception $ex)
     {
-        $message = "Try again (Sign up Error: ".$this.logException($ex).")"; 
+        $message = "Try again (Sign up Error: ".$ex->getMessage().")";
+        echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>
+            <p><a href='create.php'>Go back to Sign up page.</a></p>";
     }
 }
+
+// todo: remove alert box when message is null
+// when doing if ($message!=null), the form is not being validated
+
+    echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	            
+
 
 // If isChecked is false, display userId input only
 if ($isChecked == false)
 {
     ?>
     
-
     <form id="mainSignIn" method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return ID_Check();">
         <h1>Sign Up</h1>	
         <br />
-        
-        
-        <?php
-            // todo: remove alert box when message is null
-            // when doing if ($message!=null), the form is not being validated
-            echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	            
-        ?>
 
         <input class="signin" type="text" name="txtCheckId" id="txtCheckId" placeholder="Enter ID" /><br /><br />
         <input class="submit" type="submit" name="idCheck" id="idCheck" value="Check User ID" /><br /><br />
@@ -121,17 +104,19 @@ if ($isChecked == false)
     <?php
 }
 
+// if id check passed, display rest of the form
+
 else
 {
     ?>
 
     <form name="create" action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return Validate_Create();">
-        <input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" value="<?= $checkedId ?>" onfocusout="Trim('txtUserId');" readonly /><br /><br />
+        <input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" value="<?= $checkedId ?>" readonly /><br /><br />
         <input type="password" name="txtPassword" id="txtPassword" placeholder="Password" onfocusout="Trim('txtPassword');"><br /><br />
         <input type="password" name="txtPasswordCheck" id="txtPasswordCheck" placeholder="Re-enter Password" onfocusout="Trim('txtPasswordCheck');"><br /><br />
         <input type="text" name="txtFirstName" id="txtFirstName" placeholder="First Name" onfocusout="Trim('txtFirstName');">
-        <input type="text" name="txtLastName" id="txtLastName" placeholder="Last Name" onfocusout="Trim(txtLastName);"><br /><br />
-        <input type="text" name="txtPhone" id="txtPhone" placeholder="Phone (111-222-3333)" onfocusout="Trim(txtPhone);"><br /><br />
+        <input type="text" name="txtLastName" id="txtLastName" placeholder="Last Name" onfocusout="Trim('txtLastName');"><br /><br />
+        <input type="text" name="txtPhone" id="txtPhone" placeholder="Phone (111-222-3333)" onfocusout="Trim('txtPhone');"><br /><br />
         <input type="text" name="txtEmail" id="txtEmail" placeholder="Email" onfocusout="Trim('txtEmail');"><br /><br />
         <input type="text" name="txtAddress" id="txtAddress" placeholder="Address" onfocusout="Trim('txtAddress');"><br /><br />
         <input type="text" name="txtCity" id="txtCity" placeholder="City" onfocusout="Trim('txtCity');">
@@ -153,32 +138,6 @@ else
     <?php
 }
 
+require_once('lib/footer.php');
+
 ?>
-
-<script>
-
-function ID_Check()
-{
-    let id = document.getElementById('txtCheckId').value;
-    let error = "";
-
-    if(id == null || id.trim() == "")
-        error = "Enter USER ID";
-    
-    else if (id.length < 3 || id.length > 15)
-		error = "User ID must be between 3 and 15 characters.";
-
-    if(error == "") 
-        return true;
-
-    else
-    {
-        document.getElementById('message').innerHTML = error;
-        return false;
-    }
-        
-}
-
-</script>
-</body>
-</html>

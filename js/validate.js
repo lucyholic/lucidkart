@@ -162,6 +162,29 @@ function Trim(id)
 	document.getElementById(id).value = input.trim();
 }
 
+
+function ID_Check()
+{
+    let id = document.getElementById('txtCheckId').value;
+    let error = "";
+
+    if(id == null || id.trim() == "")
+        error = "Enter USER ID";
+    
+    else if (id.length < 3 || id.length > 15)
+		error = "User ID must be between 3 and 15 characters.";
+
+    if(error == "") 
+        return true;
+
+    else
+    {
+        document.getElementById('message').innerHTML = error;
+        return false;
+    }
+        
+}
+
 // Check if search keyword is blank
 function SearchCheck()
 {
@@ -248,4 +271,26 @@ function Validate_Order()
 	else
 		return true;
 	
+}
+
+function LoginCheck()
+{
+	var userId = document.getElementById("txtUserId").value;
+	var password = document.getElementById("txtPassword").value;
+	
+	var error = "";
+	
+	if (userId == "")
+		error += "Enter User ID.\n";
+		
+	if (password == "")
+		error += "Enter password.\n";
+		
+	if (error == "")
+		return true;
+	else 
+	{
+		document.getElementById("message").innerHTML =  '<span style="color: red; font-weight: bold">' + error + '</span>';
+		return false;
+	}
 }
