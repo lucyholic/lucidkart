@@ -70,7 +70,7 @@ or display admin menu
             <a href='itemmaintenance.php'>
                 <!-- <img src='../images/admin/itemc.png' > -->
                 <div class='overlay'>
-                    Item Maintenance
+                    <h6>Item Maintenance</h6>
                 </div>
                 <img src="../images/admin/itemc.png" alt="instagram logo" 
                 onmouseover="this.src='../images/admin/itemcc.png';" onmouseout="this.src='../images/admin/itemc.png';">
@@ -80,7 +80,7 @@ or display admin menu
         <div class='container'>
             <a href='categorymaintenance.php'>
                 <div class='overlay'>
-                    Category Maintenance
+                    <h6>Category Maintenance</h6>
                 </div>
                 <img src='../images/admin/categoryc.png' 
                 onmouseover="this.src='../images/admin/categorycc.png';" onmouseout="this.src='../images/admin/categoryc.png';">
@@ -89,7 +89,7 @@ or display admin menu
         <div class='container'>
             <a href='ordermanagement.php'>
                 <div class='overlay'>
-                    Order Management
+                    <h6>Order Management</h6>
                 </div>
                 <img src='../images/admin/orderc.png' 
                 onmouseover="this.src='../images/admin/ordercc.png';" onmouseout="this.src='../images/admin/orderc.png';">
@@ -98,7 +98,7 @@ or display admin menu
         <div class='container'>
             <a href='stockmanagement.php'>
                 <div class='overlay'>
-                    Stock Management
+                    <h6>Stock Management</h6>
                 </div>
                 <img src='../images/admin/stockc.png' 
                 onmouseover="this.src='../images/admin/stockcc.png';" onmouseout="this.src='../images/admin/stockc.png';">
