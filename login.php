@@ -32,53 +32,50 @@
 
 ?>
 
-		<form id="mainSignIn" name="login" action="processlogin.php" method="post" onsubmit="return Check();">
-			<h1>Sign In</h1>	
-			<br />
+	<form id="mainSignIn" name="frmLogin" action="processlogin.php" method="post" onsubmit="return Check();">
+		<h1>Sign In</h1>	
+		<br />
 
-			<?php
-				if ($message!=null)
-				{
-					echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
-				}
-			?>
+		<?php
+			if ($message != "")
+			{
+				echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
+			}
+		?>
 
-			<input class="signin" type="text" name="txtUserId" placeholder="User ID"><br /><br />
-			<input class="signin" type="password" name="txtPassword" placeholder="Password"><br /><br />
-			<input class="submit" type="submit" id="submit" value="Login"><br /><br />
+		<input class="signin" type="text" id="txtUserId" name="txtUserId" placeholder="User ID"><br /><br />
+		<input class="signin" type="password" id="txtPassword" name="txtPassword" placeholder="Password"><br /><br />
+		<input class="submit" type="submit" id="login" value="Login"><br /><br />
 
-			
-		    <a href="create.php">Create a new account</a>
-		</form>
+		<a href="create.php">Create a new account</a>
+	</form>
 		
 		
 	
 	<script>
-	    function Check()
-	    {
-	        var userId = document.getElementById("txtUserId").value;
-	        var password = document.getElementById("txtPassword").value;
-	        
-	        var error = "";
-	        
-	        if (userId == "")
-	            error += "Enter User ID.\n";
-	            
-	        if (password == "")
-	            error += "Enter password.\n";
-	            
-	        if (error == "")
-	            return true;
-	        else 
-            {
-<<<<<<< HEAD
-                document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
-=======
-                document.getElementById("message").innerHTML =  '<span style="color: red; font-weight: bold">' + error + '</span>';
->>>>>>> 13f5edc4458948c2e21fbc45c53f7a8a186ce894
-                return false;
-            }
-	    }
+
+	function Check()
+	{
+		var userId = document.getElementById("txtUserId").value;
+		var password = document.getElementById("txtPassword").value;
+		
+		var error = "";
+		
+		if (userId == "")
+			error += "Enter User ID.\n";
+			
+		if (password == "")
+			error += "Enter password.\n";
+			
+		if (error == "")
+			return true;
+		else 
+		{
+			document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
+			return false;
+		}
+	}
+
 	</script>
 	
 <!--footer-->

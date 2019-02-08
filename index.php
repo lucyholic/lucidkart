@@ -49,7 +49,8 @@ else
 		$id = $row['itemId'];
 		echo '<div class="item">
 				<a href="iteminfo.php?itemid='.$id.'" class="itemName">
-					<div class="overlay"><div class="description">'.$row['description'].'</div></div>
+					<div class="overlay"><div class="description">'.$row['description'].'</div>
+					</div>
 					<img src="'.$row['itemImage'].'" width="300" height="400"><br />
 					<p>'.$row['itemName'].'</p>
 				</a>';
@@ -59,7 +60,6 @@ else
 		else
 			echo '<p class="itemPrice">Sold Out</p></div>';
 	}
-	echo '</div';
 	
 	require_once('lib/footer.php');
 ?>

@@ -64,7 +64,7 @@
 	
 	require_once('lib/menu.php');
 
-	if ($message!=null)
+	if ($message != "")
 	{
 		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
 	}
