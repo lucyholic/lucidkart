@@ -1,5 +1,8 @@
 <?php
 	require_once('lib/php_header.php');
+	require_once('class/validate.php');
+	require_once('class/orderheader.php');
+	require_once('class/orderitem.php');
 	
 	// Bounce back if not coming from order.php or without login session
 	if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
@@ -21,67 +24,47 @@
 	}
 	
 	$items = $_SESSION['items'];
-	
-	// fetch information from previous page
-	$customerId = $_SESSION['userId'];
-	$orderDate = date("Y/m/d");
-	$firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
-	$lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
-	$phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
-	$address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
-	$city = mysqli_real_escape_string($conn, $_POST['txtCity']);
-	$province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
-	$postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
+
+	// construct orderHeader class
+	$orderHeader = new OrderHeader();
+
+	// Set attributes
+
+	$orderHeader->customerId = $_SESSION['userId'];
+	$orderHeader->orderDate = date("Y/m/d");
+	$orderHeader->firstName = mysqli_real_escape_string($conn, $_POST['txtFirstName']);
+	$orderHeader->lastName = mysqli_real_escape_string($conn, $_POST['txtLastName']);
+	$orderHeader->phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+	$orderHeader->address = mysqli_real_escape_string($conn, $_POST['txtAddress']);
+	$orderHeader->city = mysqli_real_escape_string($conn, $_POST['txtCity']);
+	$orderHeader->province = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+	$orderHeader->postalCode = mysqli_real_escape_string($conn, $_POST['txtPostalCode']);
 	
 	// Get Taxrate
-	$taxResult = mysqli_query($conn, "SELECT taxrate FROM province WHERE code='".$province."'");
+	$taxResult = mysqli_query($conn, "SELECT taxrate FROM province WHERE code='".$orderHeader->province."'");
 	$taxrate = floatval(mysqli_fetch_row($taxResult)[0]);
 	
 	// Create order header
-	$orderSql = "INSERT INTO orderHeader (customerId,
-		orderDate,
-		firstName,
-		lastName,
-		phoneNumber,
-		address,
-		city,
-		province,
-		postalCode) VALUES('".
-		intval($customerId)."', '".
-		$orderDate."', '".
-		$firstName."', '".
-		$lastName."', '".
-		$phone."', '".
-		$address."', '".
-		$city."', '".
-		$province."', '".
-		$postalCode."')";
+	$orderSql = $orderHeader->AddOrderHeader();
 		
-	$result = mysqli_query($conn, $orderSql);
+	mysqli_query($conn, $orderSql);
 	$orderId = mysqli_insert_id($conn);
 	
-	// add order items and update onhand	
+	// add order items	
 	$items = $_SESSION['items'];
 	foreach($items as $id => $q)
 	{
-		$detailSql = "INSERT INTO orderDetail (orderId,
-			itemId,
-			qty) VALUES('".
-			intval($orderId)."', '".
-			intval($id)."', '".
-			intval($q)."')";
-		
-		$result = mysqli_query($conn, $detailSql);
-		
-		// Update onHand
-		$onHand = mysqli_fetch_array(mysqli_query($conn, "SELECT onHand FROM item WHERE itemId='".$id."'"));
-		$onHandSql = "UPDATE item SET
-			onHand='".((int)$onHand[0] - $q)."'
-			WHERE itemId='".$id."'";
-		$result = mysqli_query($conn, $onHandSql);
+		// create an order item object
+		$o = new orderItem();
+		$o->orderId = $orderId;
+		$o->itemId = $id;
+		$o->qty = $q;
+
+		$detailSql = $o->AddOrderItem();
+		mysqli_query($conn, $detailSql);
 	}
 	
-	$_SESSION['items'] = null;
+	unset($_SESSION['items']);
 	$items = null;
 	
 
@@ -100,7 +83,9 @@
 	echo "<h3>Item</h3>";
 	
 	//	itemSql
-	$itemResult = mysqli_query($conn, "SELECT * FROM orderDetail JOIN item ON orderDetail.itemId=item.itemId WHERE orderid='".$orderId."'");
+	$itemResult = mysqli_query($conn, "SELECT * FROM orderDetail JOIN item USING (itemId) 
+	WHERE orderid='".$orderId."'");
+
 	$total = (float)0;
 	
 	if ($itemResult -> num_rows == 0)
@@ -134,16 +119,16 @@
 		$total = round($total * (1 + $taxrate), 2);
 		
 		
-		echo '<p>'.$numRows.' items: '.$firstItem.' and '.($numRows - 1).'more items</p>
+		echo '<p>'.$numRows.' items: '.$firstItem.' and '.($numRows - 1).' more item(s)</p>
 			<p>Total Amount: $'.$total.'</p><br />';
 	}
 
 	
 	// Delivery Address
-	echo '<h3>Deliver To: '.$firstName.' '.$lastName.'</h3>
-		<p>'.$address.', <br />'
-		.$city.', '.$province.'<br />'
-		.$postalCode.'</p>';
+	echo '<h3>Deliver To: '.$orderHeader->firstName.' '.$orderHeader->lastName.'</h3>
+		<p>'.$orderHeader->address.', <br />'
+		.$orderHeader->city.', '.$orderHeader->province.'<br />'
+		.$orderHeader->postalCode.'</p>';
 		
 	
 	require_once('lib/footer.php');

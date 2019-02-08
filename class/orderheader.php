@@ -1,6 +1,6 @@
 <?php
 
-class orderHeader {
+class OrderHeader {
     
     private $orderId;
     private $customerId;
@@ -28,7 +28,7 @@ class orderHeader {
         $this->city = "";
         $this->province = "";
         $this->postalCode = "";
-        $this->dispatchedDate = "";  
+        $this->dispatchedDate = null;  
     }
 
     // Get and Set
@@ -47,7 +47,27 @@ class orderHeader {
     // Add a new order
     public function AddOrderHeader()
     {
-
+        Validate::Uniformize($this);
+        $sql = "INSERT INTO orderHeader (customerId,
+		orderDate,
+		firstName,
+		lastName,
+		phoneNumber,
+		address,
+		city,
+		province,
+		postalCode) VALUES('".
+		$this->customerId."', '".
+		$this->orderDate."', '".
+		$this->firstName."', '".
+		$this->lastName."', '".
+		$this->phone."', '".
+		$this->address."', '".
+		$this->city."', '".
+		$this->province."', '".
+        $this->postalCode."')";
+        
+        return $sql;
     }
 
     public function DispatchOrder()

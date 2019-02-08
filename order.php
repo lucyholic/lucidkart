@@ -31,7 +31,7 @@
 	// to create an associative array in js later
 	$taxString = "";
 	$taxtable = mysqli_query($conn, "SELECT * FROM province");
-	
+
 	while($taxrow = mysqli_fetch_assoc($taxtable))
 	{
 		$add = $taxrow['code'].', '.$taxrow['taxrate'].'::';
@@ -45,6 +45,7 @@
 	$css = '<link rel="stylesheet" type="text/css" href="css/item.css">';
 	
 	require_once('lib/menu.php');
+
 ?>
 	
 <script>

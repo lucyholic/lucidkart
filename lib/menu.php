@@ -82,7 +82,6 @@
 	
 	</nav>
     
-    
     	
 	<script>
         window.onscroll = function() {myFunction()};

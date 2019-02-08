@@ -54,6 +54,11 @@ class Item {
     {
         
     }
+
+    public function GetItem()
+    {
+        
+    }
 }
 
 ?>
