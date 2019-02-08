@@ -38,7 +38,6 @@
 
 		<?php
 			if ($message != "")
-			{
 				echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
 			}
 		?>

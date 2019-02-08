@@ -56,9 +56,8 @@
             
             // if user is not logged in, display 'sign in' menu
 			if (!isset($_SESSION['userId']) && !isset($_SESSION['userName']))
-    		{
-                
-    			echo "<a data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'>Sign in</a>";
+    		{                
+    			echo "<a data-toggle='modal' data-target='#loginModal' data-whatever='@mdo'>Sign in</a>";
             }
             
             // otherwise, display profile, order history, logout menu
@@ -82,7 +81,8 @@
     	<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction2()">&#9776;</a>
 	
 	</nav>
-    	
+    
+    
     	
 	<script>
         window.onscroll = function() {myFunction()};
@@ -135,21 +135,21 @@
 	
 	<hr>
 	
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
     
     <div class="modal-dialog" role="document" style="width:330px;height:400px;">
         <div class="modal-content" style="height:100%;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <h5 class="modal-title" >Sign In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true"></span>
                 </button>
             </div>
             <div class="modal-body">
             <form name="login" action="processlogin.php" method="post" onsubmit="return LoginCheck();">
-                    <input type="text" name="txtUserId" placeholder="User ID"><br /><br />
-                    <input type="password" name="txtPassword" placeholder="Password"><br /><br />
-                    <input type="submit" id="submit" value="Login"><br /><br />
+                    <input type="text" class="signin" name="txtUserId" placeholder="User ID"><br /><br />
+                    <input type="password" class="signin" name="txtPassword" placeholder="Password"><br /><br />
+                    <input type="submit" class="submit" id="submit" value="Login"><br /><br />
                     
                     <a href="create.php">Create a new account</a>
                 </form>
