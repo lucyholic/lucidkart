@@ -1,6 +1,9 @@
 <?php
 
+require_once('connectdb.php');
+
 class Item {
+
     private $itemId;
     private $itemName;
     private $itemCategory;
@@ -8,6 +11,7 @@ class Item {
     private $itemImage;
     private $description;
     private $onHand;
+    private $conn;
 
     // basic constructor of item
     function __construct()
@@ -19,6 +23,9 @@ class Item {
         $this->itemImage = "";
         $this->description = "";
         $this->onHand = 0;
+
+        $open = new ConnectDB();
+        $this->conn = $open->Connect();
     }
 
     // Get and Set

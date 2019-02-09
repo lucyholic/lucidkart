@@ -1,6 +1,10 @@
 <?php
+    
+require_once('connectdb.php');
+require_once('validate.php');
 
 class Customer{
+
     private $customerId;
     private $userId;
     private $password;
@@ -12,6 +16,8 @@ class Customer{
     private $city;
     private $province;
     private $postalCode;
+    private $conn;
+
 
     // basic constructor of customer
     function __construct()
@@ -27,6 +33,9 @@ class Customer{
         $this->city = "";
         $this->province = "";
         $this->postalCode = "";
+
+        $open = new ConnectDB();
+        $this->conn = $open->Connect();
     }
 
     // Get and Set
@@ -46,6 +55,7 @@ class Customer{
     public function AddCustomer()
     {
         Validate::Uniformize($this);
+
         $sql = "INSERT INTO customer (userId, 
             password, 
             firstName, 
@@ -67,12 +77,13 @@ class Customer{
             $this->province."', '".
             $this->postalCode."')";
         
-        return $sql;
+        mysqli_query($this->conn, $sql);
     }
 
     public function EditCustomer()
     {
         Validate::Uniformize($this);
+
         $sql = "UPDATE customer SET
 			firstName='".$this->firstName."', 
 			lastName='".$this->lastName."', 
@@ -84,9 +95,15 @@ class Customer{
 			postalCode='".$this->postalCode."'
             WHERE customerId='".$this->customerId."'";
             
-        return $sql;
+        mysqli_query($this->conn, $sql);
     }
 
+    public function GetCustomer($customerId)
+    {
+        
+
+        return $this;
+    }
 
 }
 

@@ -88,8 +88,7 @@ class Validate {
     {
         if(property_exists($o, $userId))
             $o->userId = strtolower($o->userId);
-            
-        $o->userId = strtolower($o->userId); 
+
         $o->firstName = Validate::Capitalize($o->firstName);
         $o->lastName = Validate::Capitalize($o->lastName);
         $o->address = Validate::Capitalize($o->address);

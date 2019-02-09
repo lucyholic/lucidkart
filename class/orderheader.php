@@ -1,5 +1,9 @@
 <?php
 
+require_once('connectdb.php');
+require_once('validate.php');
+
+
 class OrderHeader {
     
     private $orderId;
@@ -13,6 +17,7 @@ class OrderHeader {
     private $province;
     private $postalCode;
     private $dispatchedDate;
+    private $conn;
 
     // basic constructor of orderHeader
     public function __construct()
@@ -28,7 +33,10 @@ class OrderHeader {
         $this->city = "";
         $this->province = "";
         $this->postalCode = "";
-        $this->dispatchedDate = null;  
+        $this->dispatchedDate = null; 
+
+        $open = new ConnectDB();
+        $this->conn = $open->Connect();
     }
 
     // Get and Set
@@ -67,7 +75,7 @@ class OrderHeader {
 		$this->province."', '".
         $this->postalCode."')";
         
-        return $sql;
+        mysqli_query($conn, $sql);
     }
 
     public function DispatchOrder()

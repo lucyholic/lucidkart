@@ -1,6 +1,5 @@
 <?php
 	require_once('lib/php_header.php');
-	require_once('class/validate.php');
 	require_once('class/orderheader.php');
 	require_once('class/orderitem.php');
 	

@@ -3,9 +3,6 @@ require("lib/php_header.php");
 
 // class setting
 require_once("class/customer.php");
-require_once("class/validate.php");
-
-// sql setting
 
 // title setting
 $title = "::LUCIDKART:: - Create an Account";
@@ -65,8 +62,7 @@ if (isset($_POST['create']))
 
         if(Validate::ValidateCustomer($customer, true))
         {
-            $sql = $customer->AddCustomer();
-            mysqli_query($conn, $sql);
+            $customer->AddCustomer();
 
             echo "<script>alert('Account Created for".$customer->firstName." (User Id: ".$customer->userId.")');
                 window.location='login.php';</script>";

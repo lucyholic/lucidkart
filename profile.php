@@ -3,7 +3,6 @@
 	require_once('lib/php_header.php');
 
 	require_once('class/customer.php');
-	require_once('class/validate.php');
 	$message = "";
 
 	// if the page requires log in, keep below codes
@@ -32,8 +31,7 @@
 
 			if(Validate::ValidateCustomer($customer, false))
 			{
-				$editSql = $customer->EditCustomer();
-				mysqli_query($conn, $editSql);
+				$customer->EditCustomer();
 				$_SESSION['userName'] = $customer->firstName;
 				$message = "Your information is updated";
 			}

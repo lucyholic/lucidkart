@@ -1,5 +1,9 @@
 <?php
 
+require_once('connectdb.php');
+require_once('validate.php');
+
+
 class orderItem {
     private $orderId;
     private $itemId;
@@ -10,6 +14,9 @@ class orderItem {
         $this->orderId = 0;
         $this->itemId = 0;
         $this->qty = 0;
+
+        $open = new ConnectDB();
+        $this->conn = $open->Connect();
     }
 
     // Get and Set
@@ -34,7 +41,7 @@ class orderItem {
         $this->itemId."', '".
         $this->qty."')";
 
-        return $sql;
+        mysqli_query($conn, $sql);
     }
 
 
