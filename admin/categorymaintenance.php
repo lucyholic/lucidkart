@@ -3,7 +3,7 @@
 	require_once('lib/authentication.php');
 	
 	// title setting
-    $title = "::LUCIDKART:: - Item Detail";
+    $title = "::LUCIDKART:: - Category Maintenance";
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';

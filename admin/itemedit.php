@@ -1,6 +1,7 @@
 <?php
 	require_once('lib/header.php');		
 	require_once('lib/authentication.php');
+	require_once('../class/item.php');
 
 	// title setting
     $title = "::LUCIDKART:: - Edit";
@@ -11,10 +12,23 @@
 	require_once('lib/adminmenu.php');
 
 	$error = "";
+	$item = new Item();
+	$item = $item->GetItem();
 	
 	// If the form is sutmitted, update database
 	if (isset($_POST['edit']))
 	{
+		$item = new Item();
+
+		$item->itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
+		$item->itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
+		$item->itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
+		$item->itemPrice = number_format($itemPrice, 2);
+		$item->description = mysqli_real_escape($conn, $_POST['txtDescription']);
+		$item->description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
+		$item->latestItem = isset($_POST['chkLatest']);
+		
+
 		$itemId = $_POST['numItemId'];
 		$itemName = $_POST['txtItemName'];
 		$itemCategory = (int)$_POST['lstItemCategory'];
@@ -58,7 +72,7 @@
 	
 	// Check if item id is passed
 	// if not, redirect to item maintenance page
-	if(empty($_GET['itemid']) || isset($itemId))
+	if(empty($_GET['itemid']) || !isset($itemId))
 		echo '<script>window.location="itemmaintenance.php"</script>';
 	
 	$itemId = $_GET['itemid'];

@@ -1,6 +1,7 @@
 <?php
 	require_once('lib/header.php');	
 	require_once('lib/authentication.php');
+	require_once('../class/item.php');
 
 	// title setting
     $title = "::LUCIDKART:: - Item Upload";
@@ -12,45 +13,30 @@
 
 	if (isset($_POST['upload']))
 	{
-		$itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
-		$itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
-		$itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
-		$itemPrice = number_format($itemPrice, 2);
-		$description = mysqli_real_escape($conn, $_POST['txtDescription']);
-		$description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
-		$latestItem = isset($_POST['chkLatest']);
-		
-		$upload_dir = '../images/';
-		$uploaded_file = $upload_dir . basename($_FILES['imgItemImage']['name']);
-			
-		if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+		try
 		{
-			$itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+			$item = new Item();
+
+			$item->itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
+			$item->itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
+			$item->itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
+			$item->itemPrice = number_format($itemPrice, 2);
+			$item->description = mysqli_real_escape($conn, $_POST['txtDescription']);
+			$item->description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
+			$item->latestItem = isset($_POST['chkLatest']);
 			
-			$sql = "INSERT INTO item (itemName, 
-			itemCategory,
-			itemPrice,
-			itemImage, 
-			description,
-			latestItem) VALUES('".		
-			$itemName."', '".
-			$itemCategory."', '".
-			$itemPrice."', '".
-			$itemImage."', '".
-			$description."', '".
-			$latestItem."')";
-			
-			$result = mysqli_query($conn, $sql);
-			
+			$item->AddItem();
+				
 			$_SESSION['message'] = "Item added";
 			echo "<script>window.location='itemmaintenance.php';</script>";
 		}
-		
-		else
+
+		catch (Exception $ex)
 		{
-			$_SESSION['message'] = $_FILES['imgItemImage']['error'];
-			echo "window.location='itemmaintenance.php'";
+			$_SESSION['message'] = $ex->getMessage();
+			echo "<script>window.location='itemmaintenance.php';</script>";
 		}
+
 	}
 	
 ?>

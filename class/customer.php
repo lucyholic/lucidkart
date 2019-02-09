@@ -100,7 +100,24 @@ class Customer{
 
     public function GetCustomer($customerId)
     {
+        $sql = "SELECT * FROM customer WHERE customerId=".$customerId;
+        $result = mysqli_query($this->conn, $sql);
+
+        if ($result -> num_rows == 0)
+            throw new Exception('Customer ID Error');
         
+        $row = mysqli_fetch_assoc($result);
+
+        $this->userId = $row['userId'];
+        $this->password = $row['password'];
+        $this->firstName = $row['firstName'];
+        $this->lastName = $row['lastName'];
+        $this->phone = $row['phone'];
+        $this->email = $row['email'];
+        $this->address = $row['address'];
+        $this->city = $row['city'];
+        $this->province = $row['province'];
+        $this->postalCode = $row['postalCode'];
 
         return $this;
     }
