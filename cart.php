@@ -15,7 +15,6 @@
 		    window.location = 'index.php';</script>";
 	}
 
-
 	else
 	{
 		// if no session for cart, set it first

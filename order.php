@@ -135,40 +135,41 @@ function ClearAddress()
 		</tr>
 		
 		<?php
-			foreach($_SESSION['items'] as $id => $q)
-			{
-				$sql = "SELECT * FROM item WHERE itemId=".$id;
-				$row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-				$subtotal = floatval($q) * $row['itemPrice'];
-				$total += $subtotal;
-				$key = $row['itemId'];
-				
-				echo "<tr>
-					<td>".$row['itemName']."</td>
-					<td>".$row['itemPrice']."</td>
-					<td>".$q."</td>
-					<td>".$subtotal."</td>			
-				</tr>";
-			}
+
+		foreach($_SESSION['items'] as $id => $q)
+		{
+			$sql = "SELECT * FROM item WHERE itemId=".$id;
+			$row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+			$subtotal = floatval($q) * $row['itemPrice'];
+			$total += $subtotal;
+			$key = $row['itemId'];
 			
 			echo "<tr>
-					<td></td>
-					<td></td>
-					<td>Total:</td>
-					<td>".$total."</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>Tax:</td>
-					<td id='numTax'>".round($tax * $total, 2)."</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>GrandTotal:</td>
-					<td id='numGrandTotal'>".round((1 + $tax) * $total, 2)."</td>
-				</tr>";
+				<td>".$row['itemName']."</td>
+				<td>".$row['itemPrice']."</td>
+				<td>".$q."</td>
+				<td>".$subtotal."</td>			
+			</tr>";
+		}
+		
+		echo "<tr>
+				<td></td>
+				<td></td>
+				<td>Total:</td>
+				<td>".$total."</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td>Tax:</td>
+				<td id='numTax'>".round($tax * $total, 2)."</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td>GrandTotal:</td>
+				<td id='numGrandTotal'>".round((1 + $tax) * $total, 2)."</td>
+			</tr>";
 		
 		?>
 		

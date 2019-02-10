@@ -38,7 +38,7 @@ class Order {
         $this->province = "";
         $this->postalCode = "";
         $this->dispatchedDate = null; 
-        $this->orderDetails = null;
+        $this->orderDetails = array();
         $this->numOfItems = 0;
         $this->subtotal = (float)0;
         $this->tax = (float)0;
@@ -115,11 +115,11 @@ class Order {
 
             mysqli_query($this->conn, $sql);
 
-            $this->subtotal += $this->GetPrice($id) * (int)$q;
+            $this->subtotal += $this->GetItemPrice($id) * (int)$q;
         }
     }
 
-    function GetPrice($itemId)
+    function GetItemPrice($itemId)
     {
         $sql = "SELECT itemPrice FROM item WHERE itemId = '".$itemId."'";
         $result = mysqli_query($this->conn, $sql);
@@ -142,14 +142,50 @@ class Order {
         
     }
 
-    function GetOrderHeader()
+    function GetOrderHeader($orderId)
     {
+        $sql = "SELECT * FROM orderHeader WHERE orderId='".$orderId."'";
+        $result = mysqli_query($this->conn, $sql);
 
+        if($result->num_rows == 0)
+            throw new Exception('Order header ID error');
+
+        $row = mysqli_fetch_assoc($result);
+
+        $this->orderId = $orderId;
+        $this->customerId = $row['customerId'];
+		$this->orderDate = $row['orderDate'];
+		$this->firstName = $row['firstName'];
+		$this->lastName = $row['lastName'];
+		$this->phone = $row['phoneNumber'];
+		$this->address = $row['address'];
+		$this->city = $row['city'];
+		$this->province = $row['province'];
+        $this->postalCode = $row['postalCode'];
+        
+        if($row['dispatchedDate'] != null)
+            $this->dispatchedDate = $row['dispatchedDate'];
+
+        return $this;
     }
 
     function GetOrderDetail()
     {
+        $sql = "SELECT * FROM orderDetail
+            JOIN item USING(itemId)
+            WHERE orderId='".$this->orderId."'' AND customerId=''".$this->customerId."'";
+        $result = mysqli_query($this->conn, $sql);
 
+        if($result->num_rows == 0)
+            throw new Exception('No Item in Order');
+
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $this->orderDetails[$row['itemId']] = $row['qty'];
+            $this->subtotal += (float)$row['itemPrice'] * (float)$row['qty'];
+        }
+        
+        $this->subtotal = number_format($this->subtotal, 2);
     }
 }
 

@@ -61,7 +61,7 @@ class Validate {
             
         else
         {
-            throw new Excption($error);
+            throw new Exception($error);
         }
             
     }
@@ -106,12 +106,62 @@ class Validate {
 
     }
 
-    static function ValidateOrder()
+    static function ValidateOrder(Order $o)
     {
+        $customerId = $o->customerId;
+        $orderDate = $o->orderdate;
+        $firstName = trim($o->firstName."");
+        $lastName = trim($o->lastName."");
+        $phone = trim($o->phone."");
+        $email = trim($o->email."");
+        $address = trim($o->address."");
+        $city = trim($o->city."");
+        $province = trim($o->province."");
+        $postalCode = trim($o->postalCode."");
 
+        $error = "";
+
+        if($customerId == "")
+            $error .= "Customer ID is missing.\n";
+        
+        if($orderDate == "")
+            $error .= "Order date is missing.\n";
+        
+        if($firstName == "")
+            $error .= "First name is missing.\n";
+        
+        if($lastName == "")
+            $error .= "Last name is missing.\n";
+
+        if($phone == "")
+            $error .= "Phone number is missing.\n";
+        
+        if($email == "")
+            $error .= "Email address is missing.\n";
+
+        if($address == "")
+            $error .= "Address is missing.\n";
+
+        if($city == "")
+            $error .= "City is missing.\n";
+
+        if($province == "")
+            $error .= "Province is missing.\n";
+
+        if($postalCode == "")
+            $error .= "Postal code is missing.\n";
+
+        if ($error == "")
+        {
+            return true;
+        }
+            
+        else
+        {
+            throw new Exception($error);
+        }
+        
     }
-
-
 
     static function Capitalize(string $input)
     {
