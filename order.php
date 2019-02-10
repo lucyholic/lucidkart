@@ -103,7 +103,7 @@ function ClearAddress()
 		<input type="radio" name="ad" value="1" onclick="UpdateAddress();">Existing Address<br />
 		<input type="radio" name="ad" value="2" onclick="ClearAddress();">New Address<br />
 		First Name: <input type="text" name="txtFirstName" id="txtFirstName" onfocusout="Trim('txtFirstName');"><br />
-		Last Name: <input type="text" name="txtLastName" id="txtLastName" onfocusout="Trim(txtLastName);"><br />
+		Last Name: <input type="text" name="txtLastName" id="txtLastName" onfocusout="Trim('txtLastName');"><br />
 		Phone Number: <input type="text" name="txtPhone" id="txtPhone" placeholder="111-222-3333" onfocusout="Trim('txtPhone');" /><br />
 		Address: <input type="text" name="txtAddress" id="txtAddress" onfocusout="Trim('txtAddress');" /><br />
 		City: <input type="text" name="txtCity" id="txtCity" onfocusout="Trim('txtCity');" /><br />
