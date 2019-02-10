@@ -32,13 +32,15 @@
 		echo '<p>$ '.$item->itemPrice.'</p>';
 		echo '<p>'.$item->description.'</p>';
 		echo '<p>Latest Item: <input type="checkbox" '.$checked.' readonly /></p>';
+		echo '<a href="itemedit.php?itemid='.$item->itemId.'">Edit</a><br s/>';
 		echo '<a href="itemmaintenance.php">Go back to Item Maintenance Page</a>';
 
 	}
 	
 	catch(Exception $ex)
 	{
-		echo '<script>window.location="../notfound.php"</script>';
+		$_SESSION['message'] = $ex->getMessage();
+		echo '<script>window.location="itemmaintenance.php"</script>';
 	}
 
 	

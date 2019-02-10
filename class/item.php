@@ -1,6 +1,7 @@
 <?php
 
 require_once('connectdb.php');
+require_once('validate.php');
 
 class Item {
 
@@ -12,7 +13,7 @@ class Item {
     private $itemImage;
     private $description;
     private $onHand;
-    private $latestItem;
+    private $latestCollection;
     private $conn;
 
     // basic constructor of item
@@ -47,47 +48,71 @@ class Item {
     // Add a new item
     public function AddItem()
     {
-        $upload_dir = 'images/';
-		$uploaded_file = $upload_dir . basename($_FILES['imgItemImage']['name']);
-			
-		if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
-		{
-			$this->itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
-			
-			$sql = "INSERT INTO item (itemName, 
-                itemCategory,
-                itemPrice,
-                itemImage, 
-                description,
-                latestItem) VALUES('".		
-                $this->itemName."', '".
-                $this->itemCategory."', '".
-                $this->itemPrice."', '".
-                $this->itemImage."', '".
-                $this->description."', '".
-                $this->latestItem."')";
-			
-			$result = mysqli_query($this->conn, $sql);
-		}
-		
-		else
-		{
-			throw new Exception($_FILES['imgItemImage']['error']);
-		}
+        // adjust description
+        $this->description = $this->ReplaceBR($this->description);
+
+        $this->itemPrice = number_format($this->itemPrice, 2);
+        
+        $sql = "INSERT INTO item (itemName, 
+            itemCategory,
+            itemPrice,
+            itemImage, 
+            description,
+            latestCollection) VALUES('".		
+            $this->itemName."', '".
+            $this->itemCategory."', '".
+            $this->itemPrice."', '".
+            $this->itemImage."', '".
+            $this->description."', '".
+            $this->latestCollection."')";
+        
+        $result = mysqli_query($this->conn, $sql);
+
     }
 
     public function EditItem()
     {
+        $this->CheckExist();
+
+        if($this->itemImage != "")
+        {
+            mysqli_query($this->conn, "UPDATE item SET itemImage='".$this->itemImage."' WHERE itemId='".$this->itemId."'");
+		}
+        
+        // adjust description
+        $this->description = $this->ReplaceBR($this->description);
+
+        $this->itemPrice = number_format($this->itemPrice, 2);
+
+        $sql = "UPDATE item SET
+            itemName = '".$this->itemName."',
+            itemCategory ='".$this->itemCategory."',
+            itemPrice = '".$this->itemPrice."',
+            description='".$this->description."', 
+		    latestCollection='".$this->latestCollection."' 
+		    WHERE itemId='".$this->itemId."'";
+        mysqli_query($this->conn, $sql);
 
     }
 
     public function DeleteItem()
     {
+        $this->CheckExist();
 
+        // delete img file from server
+        $imgPath = "../".$this->itemImage;
+        unlink($imgPath);
+
+        $sql = "DELETE FROM item WHERE itemId = '".$this->itemId."'";
+        mysqli_query($this->conn, $sql);
+
+        $_SESSION['message'] = "Item ".$this->itemName." is deleted.";
     }
 
-    public function UpdateOnhand()
+    public function UpdateOnhand($qty)
     {
+        $this->CheckExist();
+
         
     }
 
@@ -111,9 +136,27 @@ class Item {
         $this->itemImage = $row['itemImage'];
         $this->description = $row['description'];
         $this->onHand = $row['onHand'];
-        $this->latestItem = $row['latestItem'];
+        $this->latestCollection = $row['latestCollection'];
+
+        // replace <br> to \n in description
+        $this->description = str_replace('<br />', "\n", $this->description);
 
         return $this;
+    }
+
+    function CheckExist()
+    {
+        $sql = "SELECT 0 FROM item WHERE itemId = '".$this->itemId."'";
+        $result = mysqli_query($this->conn, $sql);
+
+        if(mysqli_num_rows($result) == 0)
+            throw new Exception('No item found');
+    }
+
+    function ReplaceBR($input)
+    {
+        $input = str_replace(array("\r\n", "\n", "\r"), '<br />', $input);
+        return $input;
     }
 }
 

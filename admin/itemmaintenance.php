@@ -11,31 +11,23 @@
 	
 	require_once('lib/adminmenu.php');
 
-	if (isset($_SESSION['message']))
-	{
-		$message = $_SESSION['message'];
-		unset($_SESSION['message']);
-	}
-	else
-		$message = "";	
-
 	
 	if (isset($_GET['search']) && trim($_GET['search']) != "")
 	{
 		$keyword = mysqli_real_escape_string($conn, $_GET['search']);
-		$sql = "SELECT itemId FROM item WHERE itemName LIKE '%".$keyword."%'";
+		$sql = "SELECT * FROM item WHERE itemName LIKE '%".$keyword."%'";
 		$result = mysqli_query($conn, $sql);
 		
 		if ($result -> num_rows == 0)
 		{
-			$message = "No item found";
-			$result = mysqli_query($conn, "SELECT itemId FROM item");
+			$_SESSION['message'] = "No item found";
+			$result = mysqli_query($conn, "SELECT * FROM item");
 		}
 	}
 
 	else if (isset($_GET['latestOnly']))
 	{
-		$latestSql = "SELECT itemId FROM item WHERE latestCollection != 0";
+		$latestSql = "SELECT * FROM item WHERE latestCollection != 0";
 		$result = mysqli_query($conn, $latestSql);
 	}
 
@@ -47,9 +39,22 @@
 	}
 
 	else
-		$result = mysqli_query($conn, "SELECT itemId FROM item");
+		$result = mysqli_query($conn, "SELECT * FROM item");
 
-	echo "<span style='color: red; font-weight: bold'>$message</span>";
+	// Set message
+	if (isset($_SESSION['message']))
+	{
+		$message = $_SESSION['message'];
+		unset($_SESSION['message']);
+	}
+	else
+		$message = "";
+
+	if($message != "")
+	{
+		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
+    }
+
 ?>
 
 	<h2>Item Maintenance</h2>
@@ -78,20 +83,17 @@
 
 	while($row = mysqli_fetch_assoc($result))
 	{
-		$item = new Item();
-		$item = $item->GetItem($row['itemId']);
-
 		// string variables for deletion
-		$alert = '"Delete item '.$item->itemName.'?"';
-		$delete = '"itemdelete.php?itemid='.$item->itemId.'"';
+		$alert = '"Delete item '.$row['itemName'].'?"';
+		$delete = '"itemdelete.php?itemid='.$row['itemId'].'"';
 		
 		echo "<tr>
-			<td>".$item->itemId."</td>
-			<td><img src='../".$item->itemImage."' width='60' height='80'></td>
-			<td>".$item->itemName."</td>
-			<td>$".$item->itemPrice."</td>
-			<td><a href='itemdetail.php?itemid=".$item->itemId."'>Detail</a> 
-			<a href='itemedit.php?itemid=".$item->itemId."'>Edit</a> 
+			<td>".$row['itemId']."</td>
+			<td><img src='../".$row['itemImage']."' width='60' height='80'></td>
+			<td>".$row['itemName']."</td>
+			<td>$".$row['itemPrice']."</td>
+			<td><a href='itemdetail.php?itemid=".$row['itemId']."'>Detail</a> 
+			<a href='itemedit.php?itemid=".$row['itemId']."'>Edit</a> 
 			<a href='javascript:if(confirm(".$alert.")) document.location.href=".$delete."'>Delete</a></td>
 			</tr>";
 	}

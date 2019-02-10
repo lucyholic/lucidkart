@@ -66,10 +66,52 @@ class Validate {
             
     }
 
+    static function ValidateItem(Item $i, bool $isAdd)
+    {
+        $itemName = ucfirst(trim($i->itemName.""));
+        $itemCategory = trim($i->itemCategory."");
+        $itemPrice = trim($i->itemPrice."");
+        $itemImage = trim($i->itemImage."");
+        $description = trim($i->description."");
+
+        $error = "";
+
+        if($itemName == "")
+            $error .= "Item name is missing\n";
+        
+        if($itemCategory == "")
+            $error .= "Item category is missing\n";
+        
+        if($itemPrice == "")
+            $error .= "Item price is missing\n";
+        
+        if ($isAdd)
+        {
+            if($itemImage == "")
+            $error .= "Item image is missing\n";
+        }
+        
+        if($description == "")
+            $error .= "Description is missing\n";
+
+        if ($error == "")
+        {
+            return true;
+        }
+            
+        else
+        {
+            throw new Exception($error);
+        }
+
+    }
+
     static function ValidateOrder()
     {
 
     }
+
+
 
     static function Capitalize(string $input)
     {

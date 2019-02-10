@@ -1,6 +1,7 @@
 <?php
 	require_once('lib/header.php');	
-	require_once('lib/authentication.php');
+    require_once('lib/authentication.php');
+    require_once('../class/category.php');
 	
 	// title setting
     $title = "::LUCIDKART:: - Category Maintenance";
@@ -9,7 +10,27 @@
 	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
 	
 	require_once('lib/adminmenu.php');
-    
+
+    // update category name
+    if(isset($_POST['update']))
+    {
+        $category = new Category();
+
+        $category->categoryId = mysqli_real_escape_string($conn, $_POST['txtId']);
+        $category->categoryName = mysqli_real_escape_string($conn, $_POST['txtName']);
+
+        $category->UpdateCategory();
+    }
+
+    if(isset($_POST['add']))
+    {
+        $category = new Category();
+
+        $category->categoryName = mysqli_real_escape_string($conn, $_POST['txtName']);
+
+        $category->AddCategory();
+    }
+
     // set message
     if (isset($_SESSION['message']))
     {
@@ -19,48 +40,12 @@
 	else
 		$message = "";	
 
-    // if update is executed, check if the name is duplicated
-    if(isset($_POST['update']))
-    {
-        $id = mysqli_real_escape_string($conn, $_POST['txtId']);
-        $name = mysqli_real_escape_string($conn, $_POST['txtName']);
-
-        $search = "SELECT 0 FROM category WHERE categoryName = '".$name."'";
-        $result = mysqli_query($conn, $search);
-        
-        if(mysqli_num_rows($result) != 0)
-        {
-            $message = "Category cannot be updated: name already exists";
-        }
-
-        else
-        {
-            $update = mysqli_query($conn, "UPDATE category SET categoryName='".$name."' WHERE categoryId = '".$id."'");
-            $message = "Category name Updated";
-        }
+    if ($message != "")
+	{
+		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
     }
-
-    if(isset($_POST['add']))
-    {
-        $name = $_POST['txtName'];
-        
-        $search = "SELECT 0 FROM category WHERE categoryName = '".$name."'";
-        $result = mysqli_query($conn, $search);
-        
-        if(mysqli_num_rows($result) != 0)
-        {
-            $message = "Category cannot be added: name already exists";
-        }
-
-        else
-        { 
-            $add = mysqli_query($conn, "INSERT INTO category (categoryName) VALUES ('$name')");
-            $message = "Category added";
-        }
-    }
+    
 ?>
-
-<span style="color: red; font-weight: bold"><?= $message ?></span>
 <h2>Category Maintenance</h2>
 
 <table>
@@ -70,11 +55,13 @@
     </tr>
 
 <?php
+
     $sql = "SELECT * FROM category";
     $result = mysqli_query($conn, $sql);
 
     while($row = mysqli_fetch_assoc($result))
     {
+        // string for deletion
         $confirm = '"Delete Category '.$row['categoryName'].'?"';
         $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
 

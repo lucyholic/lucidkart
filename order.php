@@ -9,8 +9,8 @@
 	
 	else if (!isset($_SESSION['items']) || $_SESSION['items'] == null)
 	{
-		echo '<script>alert("Cart is Empty!");
-			window.location = "cart.php"</script>';
+		$_SESSION['message'] = "Cart is empty!";
+		echo '<script>window.location = "cart.php"</script>';
 	}
 	
 	$sql = "SELECT * FROM customer WHERE customerId=".$_SESSION['userId'];

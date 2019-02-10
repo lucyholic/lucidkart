@@ -1,6 +1,8 @@
 <?php
 	require_once('lib/header.php');	
 	require_once('lib/authentication.php');
+
+	// include class
 	require_once('../class/item.php');
 
 	// title setting
@@ -17,18 +19,31 @@
 		{
 			$item = new Item();
 
-			$item->itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
-			$item->itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
-			$item->itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
-			$item->itemPrice = number_format($itemPrice, 2);
-			$item->description = mysqli_real_escape($conn, $_POST['txtDescription']);
-			$item->description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
-			$item->latestItem = isset($_POST['chkLatest']);
+			$item->itemName = mysqli_real_escape_string($conn, $_POST['txtItemName']);
+			$item->itemCategory = mysqli_real_escape_string($conn, $_POST['lstItemCategory']);
+			$item->itemPrice = mysqli_real_escape_string($conn, $_POST['txtItemPrice']);
+			$item->description = mysqli_real_escape_string($conn, $_POST['txtDescription']);
+			$item->latestCollection = isset($_POST['chkLatest']);
+
+			// upload image
+			$uploaded_file = '../images/' . basename($_FILES['imgItemImage']['name']);
 			
-			$item->AddItem();
+			if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+			{
+				$item->itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+			}
+			else
+			{
+				throw new Exception($_FILES['imgItemImage']['error']);
+			}
+			
+			if (Validate::ValidateItem($item, true))
+			{
+				$item->AddItem();
 				
-			$_SESSION['message'] = "Item added";
-			echo "<script>window.location='itemmaintenance.php';</script>";
+				$_SESSION['message'] = "Item ".$item->itemName." added";
+				echo "<script>window.location='itemmaintenance.php';</script>";
+			}
 		}
 
 		catch (Exception $ex)

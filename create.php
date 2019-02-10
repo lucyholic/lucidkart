@@ -1,7 +1,7 @@
 <?php
 require("lib/php_header.php");
 
-// class setting
+// include class
 require_once("class/customer.php");
 
 // title setting
