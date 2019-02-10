@@ -53,6 +53,13 @@
 		}
 
 	}
+
+	echo '<div id="message">';
+
+	if($message != "")
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+    echo  '</div>';
 	
 ?>
 

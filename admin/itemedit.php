@@ -38,8 +38,6 @@
 		echo '<script>window.location="itemmaintenance.php"</script>';
 	}
 
-
-	
 	// If the form is sutmitted, update database
 	if (isset($_POST['edit']))
 	{
@@ -84,10 +82,12 @@
 		
 	}
 	
+	echo '<div id="message">';
+
 	if($message != "")
-	{
-		echo "<div id='message' class='alert alert-success' role='alert'>$message</div>";
-    }
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+    echo  '</div>';
 	
 ?>
 

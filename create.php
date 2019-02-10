@@ -75,14 +75,6 @@ if (isset($_POST['create']))
     }
 }
 
-
-echo "<div id='message'>";            
-
-if($message != "")
-    echo "<div class='alert alert-danger' role='alert'>$message</div>";	
-
-echo "</div>";
-
 // If isChecked is false, display userId input only
 if ($isChecked == false)
 {
@@ -91,6 +83,15 @@ if ($isChecked == false)
     <form id="mainSignIn" method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return ID_Check();">
         <h1>Sign Up</h1>	
         <br />
+        <div id="message">
+
+    <?php
+
+        if($message != "")
+            echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+    ?>
+        </div>
 
         <input class="signin" type="text" name="txtCheckId" id="txtCheckId" placeholder="Enter ID" /><br /><br />
         <input class="submit" type="submit" name="idCheck" id="idCheck" value="Check User ID" /><br /><br />

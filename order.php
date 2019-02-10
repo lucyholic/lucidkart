@@ -91,6 +91,13 @@ function ClearAddress()
 	
 <?php
 
+	echo '<div id="message">';
+
+	if($message != "")
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+	echo  '</div>';
+	
 	echo "<h2>Processing ".$_SESSION['userName']."'s Order</h2>";
 
 ?>

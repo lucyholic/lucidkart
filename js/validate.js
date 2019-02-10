@@ -29,7 +29,7 @@ function Validate_Item()
 	
 	if (error !== "")
 	{
-		alert(error);
+		document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
 		return false;
 	}
 	
@@ -48,14 +48,14 @@ function CheckImage()
 		document.getElementById('imgItemImage').value = "";
 	}
 
-	else if (selectedFile.size>3145728)
+	else if (selectedFile.size > 3145728)
 	{
 		error += "Image size must not be greater than 3MB";
 		document.getElementById('imgItemImage').value = "";
 	}
 	
 	if (error !== "")
-		alert(error);
+		document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
 }
 
 // Check if price is numeric
@@ -128,7 +128,7 @@ function Validate_Create()
 	// If there is any error
 	if (error != "")
 	{
-		alert(error);
+		document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
 		return false;
 	}
 	
@@ -149,7 +149,10 @@ function Check(id) {
 	
 	else if (id == "txtPostalCode")
 		regexp = /^[A-Za-z][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/;
-	
+
+	else if (id == "txtCheckId")
+		regexp = /^[A-Za-z][A-Za-z0-9._]+&/;
+
 	else
 		return false;
 	
@@ -173,6 +176,9 @@ function ID_Check()
     
     else if (id.length < 3 || id.length > 15)
 		error = "User ID must be between 3 and 15 characters.";
+
+	else if (!Check('txtCheckId'))
+		error = "User ID must start with an alphabet and contain only alphabets, numbers, . or _ "
 
     if(error == "") 
         return true;
@@ -205,7 +211,7 @@ function CheckQty()
 	
 	if (qty == 0)
 	{
-		alert('Quantity cannot be 0.');
+		document.getElementById("message").innerHTML = "<span style='color: red; font-weight: bold'>Quantity cannot be 0</span>";
 		return false;
 	}
 	
@@ -263,7 +269,7 @@ function Validate_Order()
 	// If there is any error
 	if (error != "")
 	{
-		alert(error);
+		document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
 		return false;
 	}
 	
