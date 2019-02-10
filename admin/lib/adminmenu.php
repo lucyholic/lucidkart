@@ -55,7 +55,7 @@ php & sql by Lucy
 		$list = mysqli_query($conn, "SELECT * FROM category ORDER BY categoryName");
 		while($menu = mysqli_fetch_assoc($list))
 		{
-			echo "<a href='index.php?category=".$menu['categoryId']."'>".$menu['categoryName']."</a>";
+			echo "<a href='../index.php?category=".$menu['categoryId']."'>".$menu['categoryName']."</a>";
 		}
 			
 	echo "  </div>

@@ -1,7 +1,7 @@
 <?php
 require("lib/php_header.php");
 
-// include class
+// class setting
 require_once("class/customer.php");
 
 // title setting
@@ -72,16 +72,16 @@ if (isset($_POST['create']))
     catch(Exception $ex)
     {
         $message = "Try again (Sign up Error: ".$ex->getMessage().")";
-        echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>
-            <p><a href='create.php'>Go back to Sign up page.</a></p>";
     }
 }
 
-// todo: remove alert box when message is null
-// when doing if ($message!=null), the form is not being validated
 
-    echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	            
+echo "<div id='message'>";            
 
+if($message != "")
+    echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+echo "</div>";
 
 // If isChecked is false, display userId input only
 if ($isChecked == false)
@@ -105,7 +105,9 @@ else
 {
     ?>
 
-    <form name="create" action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return Validate_Create();">
+    <form id="mainSignIn" name="create" action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return Validate_Create();">
+    <h1>Sign Up</h1>	
+        <br />
         <input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" value="<?= $checkedId ?>" readonly /><br /><br />
         <input type="password" name="txtPassword" id="txtPassword" placeholder="Password" onfocusout="Trim('txtPassword');"><br /><br />
         <input type="password" name="txtPasswordCheck" id="txtPasswordCheck" placeholder="Re-enter Password" onfocusout="Trim('txtPasswordCheck');"><br /><br />
