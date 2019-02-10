@@ -35,13 +35,16 @@
 	<form id="mainSignIn" name="frmLogin" action="processlogin.php" method="post" onsubmit="return Check();">
 		<h1>Sign In</h1>	
 		<br />
+		<div id='message'>
 
 		<?php
 			if ($message != "")
 			{
-				echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	
+				echo "<div class='alert alert-danger' role='alert'>$message</div>";	
 			}
 		?>
+
+		</div>
 
 		<input class="signin" type="text" id="txtUserId" name="txtUserId" placeholder="User ID"><br /><br />
 		<input class="signin" type="password" id="txtPassword" name="txtPassword" placeholder="Password"><br /><br />
@@ -71,7 +74,7 @@
 			return true;
 		else 
 		{
-			document.getElementById("message").innerHTML = '<span style="color: red; font-weight: bold">' + error + '</span>';
+			document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
 			return false;
 		}
 	}

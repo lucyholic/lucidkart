@@ -179,7 +179,7 @@ function ID_Check()
 
     else
     {
-        document.getElementById('message').innerHTML = error;
+        document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>" + error + "</div>";
         return false;
     }
         
