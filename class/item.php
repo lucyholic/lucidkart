@@ -113,7 +113,7 @@ class Item {
     {
         $this->CheckExist();
 
-        
+        $this->onHand -= $qty;        
     }
 
     public function GetItem($itemId)
@@ -157,6 +157,13 @@ class Item {
     {
         $input = str_replace(array("\r\n", "\n", "\r"), '<br />', $input);
         return $input;
+    }
+
+    function CheckOnHandValid($qty)
+    {
+        if(($this->onHand - $qty) < 0)
+            throw new Exception('Not enough stock('.$this->itemName.')');
+    
     }
 }
 

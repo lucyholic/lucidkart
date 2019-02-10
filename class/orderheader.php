@@ -139,7 +139,15 @@ class Order {
 
     public function DispatchOrder()
     {
+        $this->CheckExist();
+
+        $date = date("Y/m/d");
+
+        $sql = "UPDATE orderHeader SET dispatchedDate = '".$date."'
+            WHERE orderId = '".$this->orderId."'";
+        mysqli_query($this->conn, $sql);
         
+        $_SESSION['message'] = "Order dispatched";
     }
 
     function GetOrderHeader($orderId)
@@ -186,6 +194,15 @@ class Order {
         }
         
         $this->subtotal = number_format($this->subtotal, 2);
+    }
+
+    function CheckExist()
+    {
+        $sql = "SELECT 0 FROM orderHeader WHERE orderId = '".$this->orderId."'";
+        $result = mysqli_query($this->conn, $sql);
+
+        if(mysqli_num_rows($result) == 0)
+            throw new Exception('No order found');
     }
 }
 
