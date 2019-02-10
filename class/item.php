@@ -66,8 +66,7 @@ class Item {
             $this->description."', '".
             $this->latestCollection."')";
         
-        $result = mysqli_query($this->conn, $sql);
-
+        mysqli_query($this->conn, $sql);
     }
 
     public function EditItem()
@@ -113,7 +112,11 @@ class Item {
     {
         $this->CheckExist();
 
-        $this->onHand -= $qty;        
+        $this->onHand -= $qty;
+
+        $sql = "UPDATE item SET onHand = ".$this->onHand."
+            WHERE itemId = ".$this->itemId;
+        mysqli_query($this->conn, $sql);  
     }
 
     public function GetItem($itemId)
@@ -159,11 +162,15 @@ class Item {
         return $input;
     }
 
-    function CheckOnHandValid($qty)
+    function CheckOnHandValid(array $arr)
     {
-        if(($this->onHand - $qty) < 0)
-            throw new Exception('Not enough stock('.$this->itemName.')');
-    
+        foreach($arr as $id=>$q)
+        {
+            $this->GetItem($id);
+            if(($this->onHand - $q) < 0)
+                throw new Exception('Not enough stock('.$this->itemName.')');
+
+        }
     }
 }
 

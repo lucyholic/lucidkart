@@ -19,12 +19,8 @@ try
     $order = $order->GetOrderHeader($orderId);
     $order->GetOrderDetail();
 
-    foreach($order->orderDetails as $id=>$q)
-    {
-        $item = new Item();
-        $item = $item->GetItem($id);
-        $item->CheckOnHandValid($q);
-    }
+    $i = new Item();
+    $i->CheckOnHandValid($order->orderDetails);
 
     foreach($order->orderDetails as $id=>$q)
     {
