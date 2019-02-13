@@ -40,6 +40,7 @@ h2 {
     font-weight: 500;
     /* transform: scaleY(2); */
     text-transform: uppercase;
+    font-size: 20px;
 }
 
 .sticky {

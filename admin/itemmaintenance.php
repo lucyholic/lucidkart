@@ -7,7 +7,8 @@
     $title = "::LUCIDKART:: - Item Maintenatnce";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	// $css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="../css/admin/adminSubpages.css">';
 	
 	require_once('lib/adminmenu.php');
 
@@ -68,7 +69,7 @@
 		<input type="submit" name="reset" value="Reset Latest Collection" />
 	</form>
 	<br />
-	<table>
+	<table class="reflow">
 		<tr>
 			<th>Item Id</th>
 			<th>Item Image</th>
@@ -103,3 +104,14 @@
 	require_once('../lib/footer.php');
 
 ?>
+<script>
+	$('table.reflow').find('th').each(function(index, value){
+
+		var $this = $(this),
+		title = '<b class="cell-label">' + $this.html() + '</b>';
+
+		// add titles to cells
+		$('table.reflow')
+		.find('tr').find('td:eq('+index+')').wrapInner('<span class="cell-content"></span>').prepend( title );
+	});
+</script>
