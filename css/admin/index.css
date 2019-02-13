@@ -32,7 +32,17 @@
 	height: 500px;
 }
 
-h6 {
-  color: black;  
+h6 {  
+  color: black;
+}
+
+.container a {  
+  text-decoration: none;
+  color: black;
+}
+
+.container a:hover {   
+  color: #b0b0b029;
 	letter-spacing: 1px;
 }
+
