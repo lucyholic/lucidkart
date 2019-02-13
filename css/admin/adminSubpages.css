@@ -1,0 +1,62 @@
+main {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 720px;
+    min-height: 100vh;
+    height: 100%;
+    margin-top: 70px;
+}
+main img {
+    width: 150px;
+    height: 200px;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    border-bottom: solid 1px #00000052;
+    margin: 20px;
+}
+
+td {
+    padding: 20px;
+}
+
+
+table.reflow {
+    width: 100%;   
+}
+th, td {
+    text-align: left;
+    /* border-bottom: 1px dashed silver; */
+}
+.cell-label {
+    display: none;
+}
+@media screen and (max-width: 480px) {
+
+    th {
+        display: none;
+    }
+
+    tr td {
+        clear: left;
+        
+        display: block;
+        width: 100%;
+    }
+    
+    tr td:last-child {
+        padding-bottom: 20px;
+        border-bottom: 0;
+    }
+
+    .cell-label {
+        display: block;
+    }
+    .cell-content {
+        display: block;
+    }
+}
