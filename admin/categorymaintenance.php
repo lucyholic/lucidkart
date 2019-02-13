@@ -7,7 +7,7 @@
     $title = "::LUCIDKART:: - Category Maintenance";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="../css/admin/adminSubpages.css">';
 	
 	require_once('lib/adminmenu.php');
 
@@ -48,7 +48,7 @@
 ?>
 <h2>Category Maintenance</h2>
 
-<table>
+<table class="reflow">
     <tr>
         <th>Category Name</th>
         <th>Delete</th>
@@ -90,12 +90,24 @@
 <input type="button" value="Add a Category" onclick="AddCategory();" />
 
 <script>
-// add a div for new category dynamically
-function AddCategory()
-{
-    var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
-    document.getElementById("add").innerHTML = newCategory;
-}
+    // add a div for new category dynamically
+    function AddCategory()
+    {
+        var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
+        document.getElementById("add").innerHTML = newCategory;
+    }
+
+    //table reflow
+	$('table.reflow').find('th').each(function(index, value){
+
+		var $this = $(this),
+		title = '<b class="cell-label">' + $this.html() + '</b>';
+
+		// add titles to cells
+		$('table.reflow')
+		.find('tr').find('td:eq('+index+')').wrapInner('<span class="cell-content"></span>').prepend( title );
+    });
+    
 </script>
 
 <?php

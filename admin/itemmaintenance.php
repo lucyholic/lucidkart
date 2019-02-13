@@ -104,6 +104,8 @@
 	require_once('../lib/footer.php');
 
 ?>
+
+<!--table reflow-->
 <script>
 	$('table.reflow').find('th').each(function(index, value){
 

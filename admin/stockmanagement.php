@@ -6,7 +6,7 @@
     $title = "::LUCIDKART:: - Stock management";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="../css/admin/adminSubpages.css">';
 	
 	require_once('lib/adminmenu.php');
 
@@ -64,7 +64,8 @@
 
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-<table><tr>
+<table class="reflow">
+	<tr>
 	<th>Item ID</th>
 	<th>Item Name</th>
 	<th>On Hand</th>
@@ -92,3 +93,16 @@
 
 	require_once('../lib/footer.php');
 ?>
+
+<!--table reflow-->
+<script>
+	$('table.reflow').find('th').each(function(index, value){
+
+		var $this = $(this),
+		title = '<b class="cell-label">' + $this.html() + '</b>';
+
+		// add titles to cells
+		$('table.reflow')
+		.find('tr').find('td:eq('+index+')').wrapInner('<span class="cell-content"></span>').prepend( title );
+	});
+</script>
