@@ -1,25 +1,25 @@
 <?php
 	require_once('lib/php_header.php');
-	//include('css/item.css'); 
+	require_once('class/item.php');
 	
 	if(empty($_GET['itemid']))
 		header('Location: index.php');
 	
 	$id = mysqli_real_escape_string($conn, $_GET['itemid']);
-	
-	$sql = "SELECT * FROM item 
-		JOIN category 
-		ON item.itemCategory = category.categoryId 
-		WHERE itemId=".$id;	
-	$result = mysqli_query($conn, $sql);
-	
-	if ($result -> num_rows == 0)
-		header('Location: notfound.php');
-	
-	$row = mysqli_fetch_assoc($result);
 
+	try
+	{
+		$item = new Item();
+		$item = $item->GetItem($id);
+	}
+
+	catch(Exception $ex)
+	{
+		echo "<script> window.location = 'index.php';</script>";
+	}
+	
     // title setting
-    $title = "::LUCIDKART:: - " . $row['itemName'];
+    $title = "::LUCIDKART:: - " . $item->itemName;
     
     // include css
 	$css = '<link rel="stylesheet" type="text/css" href="css/item.css">';
@@ -36,17 +36,17 @@
 
 <?php
 	
-	echo '<div><img src="'.$row['itemImage'].'" width="300" height="400"></div>';
+	echo '<div><img src="'.$item->itemImage.'" width="300" height="400"></div>';
 	
 	echo '<form id="itemForm" name="addCart" action="cart.php" method="post" onsubmit="return CheckQty();">
-		<input type="hidden" name="txtItemId" id="txtItemId" value='.$row['itemId'].' readonly /><br />';
+		<input type="hidden" name="txtItemId" id="txtItemId" value='.$item->itemId.' readonly /><br />';
 		
-	echo '<h2>'.$row['itemName'].'</h2>';
-	echo '<p>Category: '.$row['categoryName'].'</p>';
-	echo '<div><p>$ '.number_format($row['itemPrice'], 2).'</p>';
-	echo '<p>'.$row['description'].'</p></div>';
+	echo '<h2>'.$item->itemName.'</h2>';
+	echo '<p>Category: '.$item->categoryName.'</p>';
+	echo '<div><p>$ '.$item->itemPrice.'</p>';
+	echo '<p>'.$item->description.'</p></div>';
 	
-	if ($row['onHand'] == 0)
+	if ((int)$item->onHand == 0)
 		echo "Sold Out";
 	else
 	{

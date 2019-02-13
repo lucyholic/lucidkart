@@ -32,7 +32,12 @@
     }
 
     $result = mysqli_query($conn, $sql);
-    echo "<span style='color: red; font-weight: bold'>$message</span>";
+
+    if ($message != "")
+	{
+		echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";
+	}
+    
  ?>
 
 

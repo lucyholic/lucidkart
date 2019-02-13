@@ -61,14 +61,106 @@ class Validate {
             
         else
         {
-            throw new Excption($error);
+            throw new Exception($error);
         }
             
     }
 
-    static function ValidateOrder()
+    static function ValidateItem(Item $i, bool $isAdd)
     {
+        $itemName = ucfirst(trim($i->itemName.""));
+        $itemCategory = trim($i->itemCategory."");
+        $itemPrice = trim($i->itemPrice."");
+        $itemImage = trim($i->itemImage."");
+        $description = trim($i->description."");
 
+        $error = "";
+
+        if($itemName == "")
+            $error .= "Item name is missing\n";
+        
+        if($itemCategory == "")
+            $error .= "Item category is missing\n";
+        
+        if($itemPrice == "")
+            $error .= "Item price is missing\n";
+        
+        if ($isAdd)
+        {
+            if($itemImage == "")
+            $error .= "Item image is missing\n";
+        }
+        
+        if($description == "")
+            $error .= "Description is missing\n";
+
+        if ($error == "")
+        {
+            return true;
+        }
+            
+        else
+        {
+            throw new Exception($error);
+        }
+
+    }
+
+    static function ValidateOrder(Order $o)
+    {
+        $customerId = $o->customerId;
+        $orderDate = $o->orderdate;
+        $firstName = trim($o->firstName."");
+        $lastName = trim($o->lastName."");
+        $phone = trim($o->phone."");
+        $email = trim($o->email."");
+        $address = trim($o->address."");
+        $city = trim($o->city."");
+        $province = trim($o->province."");
+        $postalCode = trim($o->postalCode."");
+
+        $error = "";
+
+        if($customerId == "")
+            $error .= "Customer ID is missing.\n";
+        
+        if($orderDate == "")
+            $error .= "Order date is missing.\n";
+        
+        if($firstName == "")
+            $error .= "First name is missing.\n";
+        
+        if($lastName == "")
+            $error .= "Last name is missing.\n";
+
+        if($phone == "")
+            $error .= "Phone number is missing.\n";
+        
+        if($email == "")
+            $error .= "Email address is missing.\n";
+
+        if($address == "")
+            $error .= "Address is missing.\n";
+
+        if($city == "")
+            $error .= "City is missing.\n";
+
+        if($province == "")
+            $error .= "Province is missing.\n";
+
+        if($postalCode == "")
+            $error .= "Postal code is missing.\n";
+
+        if ($error == "")
+        {
+            return true;
+        }
+            
+        else
+        {
+            throw new Exception($error);
+        }
+        
     }
 
     static function Capitalize(string $input)
@@ -84,16 +176,16 @@ class Validate {
         return trim($newInput);
     }
 
-    static function Uniformize(object $o)
+    static function Uniformize($o)
     {
         if(property_exists($o, $userId))
-            $o->userId = strtolower($c->userId);
-            
-        $o->firstName = Validate::Capitalize($c->firstName);
-        $o->lastName = Validate::Capitalize($c->lastName);
-        $o->address = Validate::Capitalize($c->address);
-        $o->city = Validate::Capitalize($c->city);
-        $o->postalCode = strtoupper($c->postalCode);
+            $o->userId = strtolower($o->userId);
+
+        $o->firstName = Validate::Capitalize($o->firstName);
+        $o->lastName = Validate::Capitalize($o->lastName);
+        $o->address = Validate::Capitalize($o->address);
+        $o->city = Validate::Capitalize($o->city);
+        $o->postalCode = strtoupper($o->postalCode);
     }
 
 }

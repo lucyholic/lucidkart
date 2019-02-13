@@ -2,6 +2,9 @@
 	require_once('lib/header.php');	
 	require_once('lib/authentication.php');
 
+	// include class
+	require_once('../class/item.php');
+
 	// title setting
     $title = "::LUCIDKART:: - Item Upload";
     
@@ -12,46 +15,51 @@
 
 	if (isset($_POST['upload']))
 	{
-		$itemName = mysqli_real_escape($conn, $_POST['txtItemName']);
-		$itemCategory = mysqli_real_escape($conn, (int)$_POST['lstItemCategory']);
-		$itemPrice = mysqli_real_escape($conn, (float)$_POST['txtItemPrice']);
-		$itemPrice = number_format($itemPrice, 2);
-		$description = mysqli_real_escape($conn, $_POST['txtDescription']);
-		$description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
-		$latestItem = isset($_POST['chkLatest']);
-		
-		$upload_dir = '../images/';
-		$uploaded_file = $upload_dir . basename($_FILES['imgItemImage']['name']);
-			
-		if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+		try
 		{
-			$itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+			$item = new Item();
+
+			$item->itemName = mysqli_real_escape_string($conn, $_POST['txtItemName']);
+			$item->itemCategory = mysqli_real_escape_string($conn, $_POST['lstItemCategory']);
+			$item->itemPrice = mysqli_real_escape_string($conn, $_POST['txtItemPrice']);
+			$item->description = mysqli_real_escape_string($conn, $_POST['txtDescription']);
+			$item->latestCollection = isset($_POST['chkLatest']);
+
+			// upload image
+			$uploaded_file = '../images/' . basename($_FILES['imgItemImage']['name']);
 			
-			$sql = "INSERT INTO item (itemName, 
-			itemCategory,
-			itemPrice,
-			itemImage, 
-			description,
-			latestItem) VALUES('".		
-			$itemName."', '".
-			$itemCategory."', '".
-			$itemPrice."', '".
-			$itemImage."', '".
-			$description."', '".
-			$latestItem."')";
+			if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+			{
+				$item->itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+			}
+			else
+			{
+				throw new Exception($_FILES['imgItemImage']['error']);
+			}
 			
-			$result = mysqli_query($conn, $sql);
-			
-			$_SESSION['message'] = "Item added";
+			if (Validate::ValidateItem($item, true))
+			{
+				$item->AddItem();
+				
+				$_SESSION['message'] = "Item ".$item->itemName." added";
+				echo "<script>window.location='itemmaintenance.php';</script>";
+			}
+		}
+
+		catch (Exception $ex)
+		{
+			$_SESSION['message'] = $ex->getMessage();
 			echo "<script>window.location='itemmaintenance.php';</script>";
 		}
-		
-		else
-		{
-			$_SESSION['message'] = $_FILES['imgItemImage']['error'];
-			echo "window.location='itemmaintenance.php'";
-		}
+
 	}
+
+	echo '<div id="message">';
+
+	if($message != "")
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+    echo  '</div>';
 	
 ?>
 

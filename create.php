@@ -3,9 +3,6 @@ require("lib/php_header.php");
 
 // class setting
 require_once("class/customer.php");
-require_once("class/validate.php");
-
-// sql setting
 
 // title setting
 $title = "::LUCIDKART:: - Create an Account";
@@ -65,8 +62,7 @@ if (isset($_POST['create']))
 
         if(Validate::ValidateCustomer($customer, true))
         {
-            $sql = $customer->AddCustomer();
-            mysqli_query($conn, $sql);
+            $customer->AddCustomer();
 
             echo "<script>alert('Account Created for".$customer->firstName." (User Id: ".$customer->userId.")');
                 window.location='login.php';</script>";
@@ -76,16 +72,8 @@ if (isset($_POST['create']))
     catch(Exception $ex)
     {
         $message = "Try again (Sign up Error: ".$ex->getMessage().")";
-        echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>
-            <p><a href='create.php'>Go back to Sign up page.</a></p>";
     }
 }
-
-// todo: remove alert box when message is null
-// when doing if ($message!=null), the form is not being validated
-
-    echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";	            
-
 
 // If isChecked is false, display userId input only
 if ($isChecked == false)
@@ -95,6 +83,15 @@ if ($isChecked == false)
     <form id="mainSignIn" method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return ID_Check();">
         <h1>Sign Up</h1>	
         <br />
+        <div id="message">
+
+    <?php
+
+        if($message != "")
+            echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+    ?>
+        </div>
 
         <input class="signin" type="text" name="txtCheckId" id="txtCheckId" placeholder="Enter ID" /><br /><br />
         <input class="submit" type="submit" name="idCheck" id="idCheck" value="Check User ID" /><br /><br />
@@ -109,7 +106,9 @@ else
 {
     ?>
 
-    <form name="create" action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return Validate_Create();">
+    <form id="mainSignIn" name="create" action="<?= $_SERVER['PHP_SELF'] ?>" method="post" onsubmit="return Validate_Create();">
+    <h1>Sign Up</h1>	
+        <br />
         <input type="text" name="txtUserId" id="txtUserId" placeholder="User ID" value="<?= $checkedId ?>" readonly /><br /><br />
         <input type="password" name="txtPassword" id="txtPassword" placeholder="Password" onfocusout="Trim('txtPassword');"><br /><br />
         <input type="password" name="txtPasswordCheck" id="txtPasswordCheck" placeholder="Re-enter Password" onfocusout="Trim('txtPasswordCheck');"><br /><br />

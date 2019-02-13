@@ -1,6 +1,7 @@
 <?php
 	require_once('lib/header.php');		
 	require_once('lib/authentication.php');
+	require_once('../class/item.php');
 
 	// title setting
     $title = "::LUCIDKART:: - Edit";
@@ -10,82 +11,89 @@
 	
 	require_once('lib/adminmenu.php');
 
-	$error = "";
+	// Check if item id is passed
+	// if not, redirect to item maintenance page
+	if(!isset($_GET['itemid']))
+	{
+		$_SESSION['message'] = "No item found";
+		echo '<script>window.location="itemmaintenance.php"</script>';
+	}
 	
+	$itemId = mysqli_real_escape_string($conn, $_GET['itemid']);
+	$message = "";
+
+	try
+	{
+		$item = new Item();
+		$item = $item->GetItem($itemId);
+
+		if($item->latestCollection == 0)
+			$checked = "";
+		else
+			$checked = "checked";
+	}
+	catch(Exception $ex)
+	{
+		$_SESSION['message'] = $ex->getMessage();
+		echo '<script>window.location="itemmaintenance.php"</script>';
+	}
+
 	// If the form is sutmitted, update database
 	if (isset($_POST['edit']))
 	{
-		$itemId = $_POST['numItemId'];
-		$itemName = $_POST['txtItemName'];
-		$itemCategory = (int)$_POST['lstItemCategory'];
-		$itemPrice = (float)$_POST['txtItemPrice'];
-		$itemPrice = number_format($itemPrice, 2);
-		$description = $_POST['txtDescription'];
-		$description = str_replace(array("\r\n", "\n", "\r"), '<br />', $description);
-		$latestItem = isset($_POST['chkLatest']);
-
-		if (!empty($_FILES['imgItemImage']))
+		try
 		{
-			$upload_dir = 'images/';
-			$uploaded_file = $upload_dir . basename($_FILES['imgItemImage']['name']);
+			$item = new Item();
+
+			$item->itemId = $_POST['numItemId'];
+			$item->itemName = mysqli_real_escape_string($conn, $_POST['txtItemName']);
+			$item->itemCategory = mysqli_real_escape_string($conn, $_POST['lstItemCategory']);
+			$item->itemPrice = mysqli_real_escape_string($conn, $_POST['txtItemPrice']);
+			$item->description = mysqli_real_escape_string($conn, $_POST['txtDescription']);
+			$item->latestCollection = isset($_POST['chkLatest']);
+
+			if($_POST['imgItemImage'] != "")
+			{
+				$uploaded_file = '../images/' . basename($_FILES['imgItemImage']['name']);
+			
+				if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
+				{
+					$item->itemImage = 'images/'.basename($_FILES['imgItemImage']['name']);
+				}
+				else
+				{
+					throw new Exception($_FILES['imgItemImage']['error']);
+				}
+			}
+			
+			if(Validate::ValidateItem($item, false))
+			{
+				$item->EditItem();
 				
-			if (move_uploaded_file($_FILES['imgItemImage']['tmp_name'], $uploaded_file))
-			{
-				$itemImage = $uploaded_file;
-				mysqli_query($conn, "UPDATE item SET itemImage='".$itemImage."' WHERE itemId='".$itemId."'");
+				$_SESSION['message'] = "Item ".$item->itemName." edited";
+				echo "<script>window.location='itemmaintenance.php';</script>";
 			}
-			
-			else
-			{
-				$error = $_FILES['imgItemImage']['error'];
-			}
-			
 		}
-		
-		$sql = "UPDATE item SET 
-		    itemName='".$itemName."', 
-		    itemCategory='".$itemCategory."', 
-		    itemPrice='".$itemPrice."', 
-		    description='".$description."', 
-		    latestCollection='".$latestItem."' 
-		    WHERE itemId='".$itemId."'";
-		$result = mysqli_query($conn, $sql);
-		
-		$_SESSION['message'] = "Item updated";
-		echo '<script>window.location="itemmaintenance.php</script>';
+
+		catch (Exception $ex) 
+		{
+			$_SESSION['message'] = $ex->getMessage();
+		}
 		
 	}
 	
-	// Check if item id is passed
-	// if not, redirect to item maintenance page
-	if(empty($_GET['itemid']) || isset($itemId))
-		echo '<script>window.location="itemmaintenance.php"</script>';
-	
-	$itemId = $_GET['itemid'];
-	
-	$sql = "SELECT * FROM item WHERE itemId=".$itemId;
-	$result = mysqli_query($conn, $sql);
-	
-	// Check if passed id value exists on DB
-	// if not, redirect to item maintenance page
-	if ($result -> num_rows == 0)
-		echo '<script>window.location="itemmaintenance.php"</script>';
-	
-	$row = mysqli_fetch_assoc($result);
-	$row['description'] = str_replace('<br />', "\n", $row['description']);
+	echo '<div id="message">';
 
-	if ($row['latestCollection'] == 0)
-		$checked = "";
-	else
-		$checked = "checked";
+	if($message != "")
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
 
-	echo '<span style="color: red; font-weight: bold">'.$error.'</span>';
+    echo  '</div>';
 	
 ?>
 
 <form name="itemedit" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return Validate_Item();" enctype="multipart/form-data">
-<input type="hidden" name="numItemId" id="numItemId" value=<?= $row['itemId'] ?> readonly>
-Item Name: <input type="text" name="txtItemName" id="txtItemName" value="<?= $row['itemName'] ?>"><br />
+<input type="hidden" name="numItemId" id="numItemId" value=<?= $item->itemId ?> readonly>
+Item Name: <input type="text" name="txtItemName" id="txtItemName" value="<?= $item->itemName?>"><br />
 Item Category: <select name="lstItemCategory" id="lstItemCategory">
 	<option value="" disabled>Select Category</option>
 
@@ -94,7 +102,7 @@ Item Category: <select name="lstItemCategory" id="lstItemCategory">
 
 	while($option = mysqli_fetch_assoc($selectBox))
 	{
-		if ($option['categoryId'] == $row['itemCategory'])
+		if ($option['categoryId'] == $item->itemCategory)
 			echo "<option value='".$option['categoryId']."' selected='selected'>".$option['categoryName']."</option>";
 		else
 			echo "<option value='".$option['categoryId']."'>".$option['categoryName']."</option>";
@@ -102,14 +110,13 @@ Item Category: <select name="lstItemCategory" id="lstItemCategory">
 ?>
 	</select><br />
 
-Item Price: <input type="text" name="txtItemPrice" id="txtItemPrice" value="<?= $row['itemPrice'] ?>"><br />
+Item Price: <input type="text" name="txtItemPrice" id="txtItemPrice" value="<?= $item->itemPrice ?>"><br />
 Item Thumbnail: <input type="hidden" name="MAX_FILE_SIZE" value="3145728" />
 <input type="file" accept="image/*" name="imgItemImage" id="imgItemImage" onchange="CheckImage();"/><br />
-<img src='../<?= $row['itemImage'] ?>' width="300" height="400"><br />
-Item Description: <textarea name="txtDescription" id="txtDescription"><?= $row['description'] ?></textarea><br />
+<img src='../<?= $item->itemImage ?>' width="300" height="400"><br />
+Item Description: <textarea name="txtDescription" id="txtDescription"><?= $item->description ?></textarea><br />
 Latest Item: <input type="checkbox" name="chkLatest" id="chkLatest" <?= $checked ?> /><br />
 <input type="submit" name="edit" value="Save">
-<input type="reset" value="Reset">
 <input type="button" value="Cancel" onclick="history.back(-1);">
 
 </form>

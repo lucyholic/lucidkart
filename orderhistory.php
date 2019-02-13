@@ -24,8 +24,23 @@
 	
 	// menu
 	require_once('lib/menu.php');
+
+	// set message
+    if (isset($_SESSION['message']))
+    {
+        $message = $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+	else
+		$message = "";	
+
+    if ($message != "")
+	{
+		echo "<div id='message' class='alert alert-danger' role='alert'>$message</div>";
+    }
 	
 	// body contents
+	
 	echo "<h2>".$_SESSION['userName']."'s Order History</h2>";
 	
 	if (mysqli_num_rows($orderResult) == 0)

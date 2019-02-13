@@ -9,8 +9,8 @@
 	
 	else if (!isset($_SESSION['items']) || $_SESSION['items'] == null)
 	{
-		echo '<script>alert("Cart is Empty!");
-			window.location = "cart.php"</script>';
+		$_SESSION['message'] = "Cart is empty!";
+		echo '<script>window.location = "cart.php"</script>';
 	}
 	
 	$sql = "SELECT * FROM customer WHERE customerId=".$_SESSION['userId'];
@@ -31,7 +31,7 @@
 	// to create an associative array in js later
 	$taxString = "";
 	$taxtable = mysqli_query($conn, "SELECT * FROM province");
-	
+
 	while($taxrow = mysqli_fetch_assoc($taxtable))
 	{
 		$add = $taxrow['code'].', '.$taxrow['taxrate'].'::';
@@ -45,6 +45,7 @@
 	$css = '<link rel="stylesheet" type="text/css" href="css/item.css">';
 	
 	require_once('lib/menu.php');
+
 ?>
 	
 <script>
@@ -90,6 +91,13 @@ function ClearAddress()
 	
 <?php
 
+	echo '<div id="message">';
+
+	if($message != "")
+		echo "<div class='alert alert-danger' role='alert'>$message</div>";	
+
+	echo  '</div>';
+	
 	echo "<h2>Processing ".$_SESSION['userName']."'s Order</h2>";
 
 ?>
@@ -102,7 +110,7 @@ function ClearAddress()
 		<input type="radio" name="ad" value="1" onclick="UpdateAddress();">Existing Address<br />
 		<input type="radio" name="ad" value="2" onclick="ClearAddress();">New Address<br />
 		First Name: <input type="text" name="txtFirstName" id="txtFirstName" onfocusout="Trim('txtFirstName');"><br />
-		Last Name: <input type="text" name="txtLastName" id="txtLastName" onfocusout="Trim(txtLastName);"><br />
+		Last Name: <input type="text" name="txtLastName" id="txtLastName" onfocusout="Trim('txtLastName');"><br />
 		Phone Number: <input type="text" name="txtPhone" id="txtPhone" placeholder="111-222-3333" onfocusout="Trim('txtPhone');" /><br />
 		Address: <input type="text" name="txtAddress" id="txtAddress" onfocusout="Trim('txtAddress');" /><br />
 		City: <input type="text" name="txtCity" id="txtCity" onfocusout="Trim('txtCity');" /><br />
@@ -134,40 +142,41 @@ function ClearAddress()
 		</tr>
 		
 		<?php
-			foreach($_SESSION['items'] as $id => $q)
-			{
-				$sql = "SELECT * FROM item WHERE itemId=".$id;
-				$row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-				$subtotal = floatval($q) * $row['itemPrice'];
-				$total += $subtotal;
-				$key = $row['itemId'];
-				
-				echo "<tr>
-					<td>".$row['itemName']."</td>
-					<td>".$row['itemPrice']."</td>
-					<td>".$q."</td>
-					<td>".$subtotal."</td>			
-				</tr>";
-			}
+
+		foreach($_SESSION['items'] as $id => $q)
+		{
+			$sql = "SELECT * FROM item WHERE itemId=".$id;
+			$row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+			$subtotal = floatval($q) * $row['itemPrice'];
+			$total += $subtotal;
+			$key = $row['itemId'];
 			
 			echo "<tr>
-					<td></td>
-					<td></td>
-					<td>Total:</td>
-					<td>".$total."</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>Tax:</td>
-					<td id='numTax'>".round($tax * $total, 2)."</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>GrandTotal:</td>
-					<td id='numGrandTotal'>".round((1 + $tax) * $total, 2)."</td>
-				</tr>";
+				<td>".$row['itemName']."</td>
+				<td>".$row['itemPrice']."</td>
+				<td>".$q."</td>
+				<td>".$subtotal."</td>			
+			</tr>";
+		}
+		
+		echo "<tr>
+				<td></td>
+				<td></td>
+				<td>Total:</td>
+				<td>".$total."</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td>Tax:</td>
+				<td id='numTax'>".round($tax * $total, 2)."</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td>GrandTotal:</td>
+				<td id='numGrandTotal'>".round((1 + $tax) * $total, 2)."</td>
+			</tr>";
 		
 		?>
 		
