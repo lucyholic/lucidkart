@@ -211,7 +211,7 @@ function CheckQty()
 	
 	if (qty == 0)
 	{
-		document.getElementById("message").innerHTML = "<span style='color: red; font-weight: bold'>Quantity cannot be 0</span>";
+		document.getElementById("message").innerHTML = "<div class='alert alert-danger' role='alert'>Quantity cannot be 0</div>";
 		return false;
 	}
 	
