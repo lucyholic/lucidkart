@@ -59,17 +59,25 @@
 ?>
 
 	<h2>Item Maintenance</h2>
-	<p><a href="itemupload.php">Add a new Item</a></p>
-	<form name="searchform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-		<input type="text" name="search" id="search" placeholder="Search Item..">
-		<input type="submit" value="Search">
-	</form>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-		<input type="submit" name="latestOnly" value="Show Latest Collection" />
-		<input type="submit" name="reset" value="Reset Latest Collection" />
-	</form>
 	<br />
-	<table class="reflow">
+	<form class="searchForm" name="searchform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+		<input class="searchInput" type="text" name="search" id="search" placeholder="Search Item..">
+		<input class="searchButton submit" type="submit" value="Search">
+		<br><br>
+	</form>
+	<form class="mainForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+		<input class="submit" type="submit" name="latestOnly" value="Show Latest Collection" />
+		<input class="submit" type="submit" name="reset" value="Reset Latest Collection" />
+		<br /><br /><br />
+		<a href="itemupload.php" id="addNewItem">
+			Add a new Item
+			<img src="../images/plus.png" height="40px" alt="plus">
+		</a>
+	</form>
+	
+
+	<br /><br />
+	<table class="reflow">		
 		<tr>
 			<th>Item Id</th>
 			<th>Item Image</th>
@@ -88,15 +96,19 @@
 		$alert = '"Delete item '.$row['itemName'].'?"';
 		$delete = '"itemdelete.php?itemid='.$row['itemId'].'"';
 		
-		echo "<tr>
+		echo "
+		<tr>
 			<td>".$row['itemId']."</td>
 			<td><img src='../".$row['itemImage']."' width='60' height='80'></td>
 			<td>".$row['itemName']."</td>
 			<td>$".$row['itemPrice']."</td>
-			<td><a href='itemdetail.php?itemid=".$row['itemId']."'>Detail</a> 
-			<a href='itemedit.php?itemid=".$row['itemId']."'>Edit</a> 
-			<a href='javascript:if(confirm(".$alert.")) document.location.href=".$delete."'>Delete</a></td>
-			</tr>";
+			<td>
+				<a href='itemdetail.php?itemid=".$row['itemId']."'>Detail</a><br>
+				<a href='itemedit.php?itemid=".$row['itemId']."'>Edit</a><br>
+				<a href='javascript:if(confirm(".$alert.")) document.location.href=".$delete."'>Delete</a>
+			</td>
+		</tr>
+		";
 	}
 	
 	echo '</table>';
