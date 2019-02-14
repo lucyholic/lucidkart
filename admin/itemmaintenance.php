@@ -111,7 +111,8 @@
 		";
 	}
 	
-	echo '</table>';
+	echo '</table>
+	<br><br><br>';
 
 	require_once('../lib/footer.php');
 

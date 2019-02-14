@@ -80,7 +80,7 @@ input[type=text] {
 	width: 40%;
 }
 
-input[type=text].searchInput {
+input[type=text].searchInput, input[type=number].searchInput {
     /* display: inline-block;
     border: none;
     border-bottom: 2px solid black; */

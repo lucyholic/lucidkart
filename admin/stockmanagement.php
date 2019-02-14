@@ -52,16 +52,18 @@
 ?>
 
 <h2>Stock Management</h2>
-
+<br>
 <?php
 	echo "<span style='color: red; font-weight: bold'>$message</span>";
 ?>
 
 <form name="searchform" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
-	<input type="text" name="search" id="search" placeholder="Search Item..">
-	<input type="submit" value="Search">
+	<input class="searchInput" type="text" name="search" id="search" placeholder="Search Item.."">
+    <input class="searchButton submit" type="submit" value="Search">
+    <br><br>
 </form>
 
+<br><br>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 <table class="reflow">
@@ -81,15 +83,19 @@
 		$inputText = "<input type='hidden' name='$itemId' id='$itemId' value='".$row['itemId']."' />
 			<input type='number' name='$stockOnHand' id='$stockOnHand' value='".$row['onHand']."' />";
 		
-		echo '<tr>
+		echo '
+		<tr>
 			<td>'.$row['itemId'].'</td>
 			<td>'.$row['itemName'].'</td>
-			<td>'.$inputText.'</td></tr>';
+			<td>'.$inputText.'</td>
+		</tr>';
 	}
 	
 	echo '</table>
 		<input type="hidden" name="count" id="count" value="'.$count.'" />
-		<input type="submit" name="update" value="update" /><form><br />';
+		<input class="submit white" type="submit" name="update" value="update" /><form><br />
+		
+		<br><br><br>';
 
 	require_once('../lib/footer.php');
 ?>
