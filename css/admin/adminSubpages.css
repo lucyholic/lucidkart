@@ -41,18 +41,18 @@ table.reflow {
 }
 @media screen and (max-width: 480px) {
 
-    th {
+    .reflow th {
         display: none;
     }
 
-    tr td {
+    .reflow tr td {
         clear: left;
         text-align: left;
         display: block;
         width: 100%;
     }
 
-    tr td:last-child {
+    .reflow tr td:last-child {
         padding-bottom: 20px;
         border-bottom: 0;
     }

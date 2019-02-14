@@ -42,7 +42,7 @@
 
 
 <h2>Order Management</h2>
-<br />
+<br /><br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
     Search by Order ID : <input type="number" name="txtOrderId" id="txtOrderId" />
     <input type="submit" value="Search" />
@@ -52,7 +52,7 @@
     <input type="submit" name="notdispatched" value="Show Not Dispatched Orders" />
 </form>
 <br />
-<table class="reflow">
+<table>
 <tr><th>Order ID</th><th>Order Date</th><th>Dispatched Date</th></tr>
 
 <?php
@@ -77,16 +77,3 @@
 
     require_once('../lib/footer.php');
 ?>
-
-<!--table reflow-->
-<script>
-	$('table.reflow').find('th').each(function(index, value){
-
-		var $this = $(this),
-		title = '<b class="cell-label">' + $this.html() + '</b>';
-
-		// add titles to cells
-		$('table.reflow')
-		.find('tr').find('td:eq('+index+')').wrapInner('<span class="cell-content"></span>').prepend( title );
-	});
-</script>
