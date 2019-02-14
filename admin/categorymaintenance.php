@@ -47,11 +47,10 @@
     
 ?>
 <h2>Category Maintenance</h2>
-
+<br><br>
 <table class="reflow">
     <tr>
-        <th>Category Name</th>
-        <th>Delete</th>
+        <th colspan="2">Category Name</th>
     </tr>
 
 <?php
@@ -66,10 +65,10 @@
         $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
 
         // form that passes category id as hidden and category name
-        $form = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
+        $form = '<form action="'.$_SERVER['PHP_SELF'].'" class="categoryMaintenanceForm" method="post">
         <input type="hidden" name="txtId" id="txtId" value="'.$row['categoryId'].'" />
         <input type="text" name="txtName" id="txtName" value="'.$row['categoryName'].'" />
-        <input type="submit" name="update" value="Update" />
+        <input class="submit categoryMaintenance" type="submit" name="update" value="Update" />
         </form>';
         
         // link to delete the category
@@ -87,7 +86,8 @@
 <div id="add">
 </div>
 
-<input type="button" value="Add a Category" onclick="AddCategory();" />
+<br><br><br>
+<input class="submit" type="button" value="Add a Category" onclick="AddCategory();" />
 
 <script>
     // add a div for new category dynamically

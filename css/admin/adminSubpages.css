@@ -65,20 +65,18 @@ table.reflow {
     }
 }
 
+
+/* shared styles */
+
+input[type=text] {
+    padding: 1.5em;
+    letter-spacing: 1px;
+}
+
+
 /* search form styles */
 
-.mainForm input {
-    max-width: 200px;
-    width: 100%;
-	height: 40px;
-}
-
-.searchButton {
-    width: 10%;
-    background: #000000;
-    color: white;
-}
-.searchInput {
+.searchInput{
 	width: 40%;
 }
 
@@ -90,6 +88,21 @@ input[type=text].searchInput {
 
     padding: 1.5em;
     letter-spacing: 1px;
+}
+
+.searchButton,.categoryMaintenance {
+    width: 100px;
+    background: #000000;
+    color: white;
+}
+
+
+/* item maintenance */
+
+.mainForm input {
+    max-width: 200px;
+    width: 100%;
+	height: 40px;
 }
 
 #addNewItem {
@@ -111,4 +124,11 @@ input[type=text].searchInput {
     height: 8px;
     width: 8px;
     transform: translateY(-28%);
+}
+
+
+/* category maintenance */
+
+.categoryMaintenanceForm input[type=text] {
+    width: 70%;
 }
