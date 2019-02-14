@@ -408,10 +408,15 @@ input {
 
 
 .submit {	
-	/* background: #000000;
-  color: white; */
+	background: #000000;
+  color: white; 
+  border-style: none;
+  border: solid black 1px;  
+}
+
+.white{	
   background:white;
-  color: black;
+  color: black; 
   border-style: none;
   border: solid black 1px;  
 }

@@ -87,7 +87,7 @@
 </div>
 
 <br><br><br>
-<input class="submit" type="button" value="Add a Category" onclick="AddCategory();" />
+<input class="submit white" type="button" value="Add a Category" onclick="AddCategory();" />
 
 <script>
     // add a div for new category dynamically

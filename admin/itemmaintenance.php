@@ -66,8 +66,8 @@
 		<br><br>
 	</form>
 	<form class="mainForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-		<input class="submit" type="submit" name="latestOnly" value="Show Latest Collection" />
-		<input class="submit" type="submit" name="reset" value="Reset Latest Collection" />
+		<input class="white" type="submit" name="latestOnly" value="Show Latest Collection" />
+		<input class="white" type="submit" name="reset" value="Reset Latest Collection" />
 		<br /><br /><br />
 		<a href="itemupload.php" id="addNewItem">
 			Add a new Item
