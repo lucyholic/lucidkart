@@ -7,7 +7,7 @@
     $title = "::LUCIDKART:: - Category Maintenance";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="../css/admin/adminSubpages.css">';
 	
 	require_once('lib/adminmenu.php');
 
@@ -47,11 +47,10 @@
     
 ?>
 <h2>Category Maintenance</h2>
-
-<table>
+<br><br>
+<table class="reflow">
     <tr>
-        <th>Category Name</th>
-        <th>Delete</th>
+        <th colspan="2">Category Name</th>
     </tr>
 
 <?php
@@ -66,10 +65,10 @@
         $delete = '"categorydelete.php?id='.$row['categoryId'].'"';
 
         // form that passes category id as hidden and category name
-        $form = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
+        $form = '<form action="'.$_SERVER['PHP_SELF'].'" class="categoryMaintenanceForm" method="post">
         <input type="hidden" name="txtId" id="txtId" value="'.$row['categoryId'].'" />
         <input type="text" name="txtName" id="txtName" value="'.$row['categoryName'].'" />
-        <input type="submit" name="update" value="Update" />
+        <input class="submit categoryMaintenance" type="submit" name="update" value="Update" />
         </form>';
         
         // link to delete the category
@@ -87,15 +86,29 @@
 <div id="add">
 </div>
 
-<input type="button" value="Add a Category" onclick="AddCategory();" />
+<input class="submit white" type="button" value="Add a Category" onclick="AddCategory();" />
+
+<br><br><br>
 
 <script>
-// add a div for new category dynamically
-function AddCategory()
-{
-    var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
-    document.getElementById("add").innerHTML = newCategory;
-}
+    // add a div for new category dynamically
+    function AddCategory()
+    {
+        var newCategory = "<form action='categorymaintenance.php' method='post'><input type='text' name='txtName' id='txtName' placeholder='Enter Category Name' /><input type='submit' name='add' value='Add' /></form>";
+        document.getElementById("add").innerHTML = newCategory;
+    }
+
+    //table reflow
+	$('table.reflow').find('th').each(function(index, value){
+
+		var $this = $(this),
+		title = '<b class="cell-label">' + $this.html() + '</b>';
+
+		// add titles to cells
+		$('table.reflow')
+		.find('tr').find('td:eq('+index+')').wrapInner('<span class="cell-content"></span>').prepend( title );
+    });
+    
 </script>
 
 <?php

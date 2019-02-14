@@ -6,7 +6,7 @@
     $title = "::LUCIDKART:: - Order management";
     
     // include css
-	$css = '<link rel="stylesheet" type="text/css" href="../css/cart.css">';
+	$css = '<link rel="stylesheet" type="text/css" href="../css/admin/adminSubpages.css">';
 	
     require_once('lib/adminmenu.php');
     
@@ -42,14 +42,15 @@
 
 
 <h2>Order Management</h2>
-<br />
+<br /><br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-    Search by Order ID : <input type="number" name="txtOrderId" id="txtOrderId" />
-    <input type="submit" value="Search" />
+    <input class="searchInput" type="number" name="txtOrderId" id="txtOrderId" placeholder="Search Order ID..">
+    <input class="searchButton submit" type="submit" value="Search">
+    <br><br>
 </form>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-    <input type="submit" name="notdispatched" value="Show Not Dispatched Orders" />
+    <input class="white" type="submit" name="notdispatched" value="Show Not Dispatched Orders" />
 </form>
 <br />
 <table>
@@ -73,7 +74,8 @@
             <td>'.$dispatchedDate.'</td></tr>';
     }
 
-    echo '</table>';
+    echo '</table>
+    <br><br><br>';
 
     require_once('../lib/footer.php');
 ?>

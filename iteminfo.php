@@ -52,9 +52,9 @@
 	{
 		echo 'Quantity: <input type="number" name="numQty" id="numQty" value="0" step="1" min="0" max="'.$row['onHand'].'" /><br />';
 		if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
-			echo "<input id='add' type='submit' name='submit' value='Add' />";
+			echo "<input id='add' class='submit' type='submit' name='submit' value='Add' />";
 		else
-			echo "<input id='add' type='button' name='submit' value='Add' onclick='LoginAlert();' />";
+			echo "<input id='add' class='submit' type='button' name='submit' value='Add' onclick='LoginAlert();' />";
 		echo '<div id="message"></div>';
 	}
 
