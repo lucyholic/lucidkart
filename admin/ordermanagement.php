@@ -51,6 +51,7 @@
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input class="white" type="submit" name="notdispatched" value="Show Not Dispatched Orders" />
+    <input class="white" type="submit" name="showAll" value="Show All Orders" />
 </form>
 <br />
 <table>

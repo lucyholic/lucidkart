@@ -50,7 +50,7 @@
 		echo "Sold Out";
 	else
 	{
-		echo 'Quantity: <input type="number" name="numQty" id="numQty" value="1" step="1" min="0" max="'.$row['onHand'].'" /><br />';
+		echo 'Quantity: <input type="number" name="numQty" id="numQty" value="1" step="1" min="0" max="'.$item->onHand.'" /><br />';
 		if (isset($_SESSION['userId']) && isset($_SESSION['userName']))
 			echo "<input id='add' class='submit' type='submit' name='submit' value='Add' />";
 		else
